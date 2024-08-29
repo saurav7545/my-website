@@ -1,0 +1,45 @@
+body{
+    background-color: antiquewhite; /* Fallback color */
+    background-image: url('saurav.jpg');
+    background-size: cover; /* This will cover the entire viewport */
+    background-repeat: no-repeat; /* This prevents the image from repeating */
+    background-attachment: fixed; /* This keeps the background fixed while scrolling */
+    
+}
+img {
+    width: 300px; /* Set the width you want */
+    height: 200px; 
+    left: 0cqi;
+    
+}
+
+.custom-image {
+    width: 200px; /* Adjust size as needed */
+    height: 200px; /* Should be the same as width for a perfect circle */
+    border-radius: 50%; /* This makes the image circular */
+    object-fit: cover; /* This ensures the image fills the circular shape */
+    display: block; /* This removes any extra space below the image */
+    margin: 20px auto; 
+    boder color: background-blend-mode;;;;/* Centers the image and adds some vertical space */
+    :right
+
+}
+footer{
+    text-align: center;
+    padding: 20px;
+}
+
+footer a {
+    color: blue;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+footer a:hover {
+    color: red;
+}
+
+footer .fab {
+    font-size: 24px;
+    margin-right: 10px;
+}

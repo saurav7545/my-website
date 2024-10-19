@@ -103,6 +103,22 @@ h3 {
     margin-right: 0.5rem;
 }
 
+.email-link {
+    display: inline-flex;
+    align-items: center;
+    color: #3498db;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.email-link:hover {
+    color: #2980b9;
+}
+
+.email-link i {
+    margin-right: 0.5rem;
+}
+
 @media (max-width: 600px) {
     .about-container {
         padding: 1rem;

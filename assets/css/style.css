@@ -1,5 +1,4 @@
-<style>
-body {
+<style>body {
   font-family: 'Arial', sans-serif;
   background-image: url('pmz0zh.gif');
   background-repeat: no-repeat;
@@ -113,7 +112,9 @@ footer {
     flex-direction: column;
   }
 
-  .header-left, .header-center, .header-right {
+  .header-left,
+  .header-center,
+  .header-right {
     margin-bottom: 20px;
   }
 
@@ -126,4 +127,5 @@ footer {
     margin: 10px 0;
   }
 }
+
 </style>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Saurav Kumar</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .projects-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 35px;
+            margin-top: 40px;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(52, 152, 219, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2ecc71, #e74c3c, #f39c12);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: rgba(52, 152, 219, 0.3);
+        }
+
+        .project-icon {
+            font-size: 3.5em;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            margin-bottom: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover .project-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .project-title {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 18px;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+
+        .project-description {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            text-align: justify;
+            font-size: 0.95em;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            justify-content: center;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.85em;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .tech-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .project-link {
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .project-link:hover::before {
+            left: 100%;
+        }
+
+        .demo-link {
+            background: linear-gradient(135deg, #27ae60, #229954);
+            color: white;
+        }
+
+        .demo-link:hover {
+            background: linear-gradient(135deg, #229954, #1e8449);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+        }
+
+        .code-link {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            color: white;
+        }
+
+        .code-link:hover {
+            background: linear-gradient(135deg, #2c3e50, #1a252f);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(52, 73, 94, 0.4);
+        }
+
+        .project-status {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        .back-home:hover {
+            background: linear-gradient(135deg, #2980b9, #1f5f8b);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+
+        .page-title {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 3em;
+            margin-bottom: 15px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        /* Loading animation for cards */
+        .project-card {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .project-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .project-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design improvements */
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+                padding: 0 10px;
+            }
+
+            .project-card {
+                padding: 25px;
+                margin: 0 10px;
+            }
+
+            .page-title {
+                font-size: 2.2em;
+            }
+
+            .page-subtitle {
+                font-size: 1.1em;
+            }
+
+            .project-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .project-link {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Glass morphism effect */
+        .project-card {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #2980b9, #1f5f8b);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <div class="logo">
+                    <marquee behavior="10" direction="right">Mr Engineer</marquee>
+                </div>
+                <div class="name">
+                    <marquee behavior="20" direction="left">saurav Kumar</marquee>
+                </div>
+            </div>
+            <div class="header-center">
+                <h1>Shivalik College Of Engineering</h1>
+                <a href="https://shivalikcollege.edu.in/" target="_blank" class="college-link">Visit Shivalik
+                    College</a>
+            </div>
+            <div class="header-right">
+                <img src="gaurav.jpeg" alt="Saurav Kumar" class="profile-pic">
+            </div>
+        </div>
+    </div>
+
+    <div class="projects-container">
+        <a href="index.html" class="back-home">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+
+        <h1 class="page-title">My Projects</h1>
+        <p class="page-subtitle">Explore my latest work and technical achievements</p>
+
+        <div class="projects-grid">
+            <!-- Project 1: Calculator -->
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <h3 class="project-title">Advanced Calculator</h3>
+                <p class="project-description">
+                    A feature-rich calculator application with scientific functions, history tracking, and a
+                    user-friendly interface.
+                    Supports basic arithmetic, trigonometric functions, and memory operations.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">CSS</span>
+                    <span class="tech-tag">HTML</span>
+                    <span class="tech-tag">Math.js</span>
+                </div>
+                <div class="project-links">
+                    <span class="project-status">Demo Coming Soon</span>
+                    <a href="https://github.com/saurav7545/calculator.git" class="project-link code-link"
+                        target="_blank">
+                        <i class="fab fa-github"></i> Source Code
+                    </a>
+                </div>
+            </div>
+
+            <!-- Project 2: Todo List -->
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3 class="project-title">Todo List</h3>
+                <p class="project-description">
+                    A responsive todo list web application that provides to relaye student study plan and time
+                    table.
+                    Includes login page, Admin page, time table, study plan, and 5-day forecast.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">HTML</span>
+                    <span class="tech-tag">CSS</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">React.js</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://indiantodolist.netlify.app/login/login.html" class="project-link demo-link"
+                        target="_blank">
+                        <i class="fas fa-external-link-alt"></i> Live Demo
+                    </a>
+                    <a href="https://github.com/saurav7545/todolist.git" class="project-link code-link" target="_blank">
+                        <i class="fab fa-github"></i> Source Code
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2023 Saurav Kumar. All rights reserved.</p>
+        </footer>
+</body>
+
+</html>

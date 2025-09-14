@@ -11,25 +11,25 @@ const About = () => {
       icon: <FaCode />,
       title: 'Web Development',
       description: 'HTML, CSS, JavaScript, React.js',
-      color: '#3498db'
+      color: '#6366f1'
     },
     {
       icon: <FaMobileAlt />,
       title: 'Responsive Design',
       description: 'Mobile-first approach, modern UI/UX',
-      color: '#2ecc71'
+      color: '#10b981'
     },
     {
       icon: <FaDatabase />,
       title: 'Data Structures & Algorithms',
       description: 'Python, problem-solving, optimization',
-      color: '#e74c3c'
+      color: '#f59e0b'
     },
     {
       icon: <FaGraduationCap />,
       title: 'Continuous Learning',
       description: 'Always exploring new technologies',
-      color: '#f39c12'
+      color: '#8b5cf6'
     }
   ];
 
@@ -66,7 +66,10 @@ const About = () => {
           animate={isInView ? "visible" : "hidden"}
         >
           <motion.div className="about-text" variants={itemVariants}>
-            <h2 className="section-title">About Me</h2>
+            <div className="section-header">
+              <img src="/images/logo.svg" alt="Saurav Kumar Logo" className="section-logo" />
+              <h2 className="section-title">About Me</h2>
+            </div>
             <div className="about-description">
               <p>
                 I am a dedicated Computer Science Engineering student with a passion for technology and innovation.
@@ -283,6 +286,25 @@ const About = () => {
           }
         }
 
+        .section-header {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          margin-bottom: 2rem;
+        }
+
+        .section-logo {
+          height: 40px;
+          width: auto;
+          opacity: 0.8;
+          transition: all 0.3s ease;
+        }
+
+        .section-logo:hover {
+          opacity: 1;
+          transform: scale(1.05);
+        }
+
         @media (max-width: 480px) {
           .about-section {
             padding: 60px 0;
@@ -290,6 +312,16 @@ const About = () => {
 
           .skills-grid {
             grid-template-columns: 1fr;
+          }
+
+          .section-header {
+            flex-direction: column;
+            text-align: center;
+            gap: 0.5rem;
+          }
+
+          .section-logo {
+            height: 35px;
           }
         }
       `}</style>

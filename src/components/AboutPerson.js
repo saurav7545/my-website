@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FaCode, FaGraduationCap, FaHeart, FaRocket, FaLightbulb, FaUsers, FaTrophy, FaBook } from 'react-icons/fa';
 
@@ -227,8 +227,18 @@ const AboutPerson = () => {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
-                View My Work
+                View My GitHub
               </motion.a>
+              <motion.a1
+                href="https://www.instagram.com/saura_v75450/"
+                className="btn btn-secondary"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                View My Instagram
+              </motion.a1>
             </div>
           </motion.div>
         </motion.div>
@@ -325,6 +335,19 @@ const AboutPerson = () => {
 
         .personal-story {
           margin-bottom: 4rem;
+        }
+        .motion.a1 {
+          margin-left: 1rem;
+          bgcolor: black;
+          color: white;
+          border-radius: 10px;
+          padding: 10px;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          &:hover {
+            background-color: white;
+            color: black;
+          }
         }
 
         .personal-story h2 {

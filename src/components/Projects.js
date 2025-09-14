@@ -85,7 +85,10 @@ const Projects = () => {
           animate={isInView ? "visible" : "hidden"}
         >
           <motion.div className="projects-header" variants={itemVariants}>
-            <h2 className="section-title">Featured Projects</h2>
+            <div className="section-header">
+              <img src="/images/logo.svg" alt="Saurav Kumar Logo" className="section-logo" />
+              <h2 className="section-title">Featured Projects</h2>
+            </div>
             <p className="section-subtitle">
               Explore some of my latest work and technical achievements
             </p>
@@ -355,6 +358,25 @@ const Projects = () => {
 
         .view-all-projects {
           text-align: center;
+        }
+
+        .section-header {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        .section-logo {
+          height: 40px;
+          width: auto;
+          opacity: 0.8;
+          transition: all 0.3s ease;
+        }
+
+        .section-logo:hover {
+          opacity: 1;
+          transform: scale(1.05);
         }
 
         @media (max-width: 768px) {

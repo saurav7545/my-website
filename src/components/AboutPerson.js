@@ -229,7 +229,7 @@ const AboutPerson = () => {
               >
                 View My GitHub
               </motion.a>
-              <motion.a1
+              <motion.a
                 href="https://www.instagram.com/saura_v75450/"
                 className="btn btn-secondary"
                 target="_blank"
@@ -238,7 +238,7 @@ const AboutPerson = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 View My Instagram
-              </motion.a1>
+              </motion.a>
             </div>
           </motion.div>
         </motion.div>

@@ -52,11 +52,8 @@ const Education = () => {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <img
-                src="/assets/images/shivalikcollege.png"
+                src="/images/placeholder.svg"
                 alt="Shivalik College of Engineering"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                }}
               />
             </motion.div>
 

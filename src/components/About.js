@@ -89,11 +89,8 @@ const About = () => {
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <img 
-                  src="/gaurav.jpeg" 
+                  src="/images/placeholder.svg" 
                   alt="Saurav Kumar - Computer Science Engineer"
-                  onError={(e) => {
-                    e.target.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><rect width="300" height="300" fill="%23667eea"/><text x="150" y="150" text-anchor="middle" fill="white" font-size="18">Saurav Kumar</text></svg>';
-                  }}
                 />
                 <div className="image-overlay">
                   <div className="overlay-content">

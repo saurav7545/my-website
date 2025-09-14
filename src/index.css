@@ -19,21 +19,6 @@
   --gradient-accent: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
 }
 
-/* Dark Mode Variables */
-.dark {
-  --primary-color: #818cf8;
-  --secondary-color: #34d399;
-  --accent-color: #fbbf24;
-  --text-dark: #f9fafb;
-  --text-light: #9ca3af;
-  --bg-light: #111827;
-  --bg-white: #1f2937;
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.4);
-  --gradient-primary: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
-  --gradient-secondary: linear-gradient(135deg, #34d399 0%, #10b981 100%);
-  --gradient-accent: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-}
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -226,45 +211,153 @@ html {
   }
 }
 
+/* Smart TV and Large Displays (4K, 8K) */
+@media (min-width: 2560px) {
+  .container {
+    max-width: 2400px;
+    padding: 0 60px;
+  }
+  
+  .section-title {
+    font-size: 4rem;
+  }
+  
+  .section-subtitle {
+    font-size: 1.8rem;
+  }
+  
+  .btn {
+    padding: 20px 40px;
+    font-size: 1.4rem;
+  }
+  
+  body {
+    font-size: 1.2rem;
+  }
+}
+
+/* Large Desktop Displays */
+@media (min-width: 1920px) and (max-width: 2559px) {
+  .container {
+    max-width: 1800px;
+    padding: 0 40px;
+  }
+  
+  .section-title {
+    font-size: 3.5rem;
+  }
+  
+  .section-subtitle {
+    font-size: 1.5rem;
+  }
+  
+  .btn {
+    padding: 18px 36px;
+    font-size: 1.2rem;
+  }
+}
+
+/* Standard Desktop */
+@media (min-width: 1200px) and (max-width: 1919px) {
+  .container {
+    max-width: 1200px;
+    padding: 0 30px;
+  }
+  
+  .section-title {
+    font-size: 3rem;
+  }
+  
+  .section-subtitle {
+    font-size: 1.3rem;
+  }
+}
+
+/* Tablet Landscape */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .container {
+    max-width: 100%;
+    padding: 0 20px;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+  }
+  
+  .section-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .btn {
+    padding: 12px 24px;
+    font-size: 1rem;
+  }
+}
+
+/* Tablet Portrait */
+@media (min-width: 481px) and (max-width: 767px) {
+  .container {
+    padding: 0 15px;
+  }
+  
+  .section-title {
+    font-size: 2.2rem;
+  }
+  
+  .section-subtitle {
+    font-size: 1rem;
+  }
+  
+  .btn {
+    padding: 11px 22px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile Devices */
 @media (max-width: 480px) {
+  .container {
+    padding: 0 10px;
+  }
+  
   .section-title {
     font-size: 1.8rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.9rem;
   }
   
   .btn {
     padding: 10px 20px;
     font-size: 0.9rem;
   }
+  
+  body {
+    font-size: 0.9rem;
+  }
 }
 
-/* Dark Mode Toggle */
-.dark-mode-toggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1001;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: none;
-  background: var(--gradient-primary);
-  color: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow);
-  transition: all 0.3s ease;
+/* Extra Small Mobile Devices */
+@media (max-width: 320px) {
+  .container {
+    padding: 0 5px;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.8rem;
+  }
+  
+  .btn {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
 }
 
-.dark-mode-toggle:hover {
-  box-shadow: var(--shadow-hover);
-}
-
-.toggle-icon {
-  position: absolute;
-  font-size: 1.2rem;
-}
 
 /* Scroll Progress */
 .scroll-progress {

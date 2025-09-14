@@ -194,6 +194,89 @@ const Navbar = () => {
           color: var(--primary-color);
         }
 
+        /* Smart TV and Large Displays */
+        @media (min-width: 2560px) {
+          .nav-container {
+            padding: 0 3rem;
+            height: 100px;
+          }
+
+          .nav-logo {
+            height: 80px;
+          }
+
+          .logo-img {
+            height: 60px;
+          }
+
+          .nav-menu {
+            gap: 3rem;
+          }
+
+          .nav-link {
+            font-size: 1.4rem;
+            padding: 1rem 1.5rem;
+          }
+        }
+
+        /* Large Desktop Displays */
+        @media (min-width: 1920px) and (max-width: 2559px) {
+          .nav-container {
+            padding: 0 2rem;
+            height: 90px;
+          }
+
+          .nav-logo {
+            height: 75px;
+          }
+
+          .logo-img {
+            height: 55px;
+          }
+
+          .nav-menu {
+            gap: 2.5rem;
+          }
+
+          .nav-link {
+            font-size: 1.2rem;
+            padding: 0.8rem 1.2rem;
+          }
+        }
+
+        /* Standard Desktop */
+        @media (min-width: 1200px) and (max-width: 1919px) {
+          .nav-container {
+            padding: 0 1.5rem;
+          }
+
+          .nav-menu {
+            gap: 2rem;
+          }
+
+          .nav-link {
+            font-size: 1.1rem;
+            padding: 0.7rem 1rem;
+          }
+        }
+
+        /* Tablet Landscape */
+        @media (min-width: 768px) and (max-width: 1199px) {
+          .nav-container {
+            padding: 0 1rem;
+          }
+
+          .nav-menu {
+            gap: 1.5rem;
+          }
+
+          .nav-link {
+            font-size: 1rem;
+            padding: 0.6rem 0.8rem;
+          }
+        }
+
+        /* Mobile Devices */
         @media (max-width: 768px) {
           .hamburger {
             display: block;
@@ -225,6 +308,25 @@ const Navbar = () => {
 
           .nav-link {
             font-size: 1.2rem;
+          }
+        }
+
+        /* Extra Small Mobile */
+        @media (max-width: 480px) {
+          .nav-container {
+            padding: 0 0.5rem;
+          }
+
+          .nav-logo {
+            height: 45px;
+          }
+
+          .logo-img {
+            height: 30px;
+          }
+
+          .nav-link {
+            font-size: 1rem;
           }
         }
       `}</style>

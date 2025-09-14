@@ -242,13 +242,143 @@ const Hero = () => {
           border-top: 6px solid white;
         }
 
-        @media (max-width: 768px) {
+        /* Smart TV and Large Displays */
+        @media (min-width: 2560px) {
+          .hero-section {
+            min-height: 100vh;
+            padding: 4rem 0;
+          }
+
+          .hero-content {
+            padding: 4rem 3rem;
+          }
+
           .hero-title {
-            font-size: 2.5rem;
+            font-size: 6rem;
+            margin-bottom: 2rem;
           }
 
           .hero-subtitle {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+          }
+
+          .hero-description {
+            font-size: 1.8rem;
+            margin-bottom: 3rem;
+            max-width: 1000px;
+          }
+
+          .cta-buttons {
+            gap: 2rem;
+          }
+
+          .btn {
+            padding: 1.5rem 3rem;
+            font-size: 1.4rem;
+          }
+        }
+
+        /* Large Desktop Displays */
+        @media (min-width: 1920px) and (max-width: 2559px) {
+          .hero-section {
+            min-height: 100vh;
+            padding: 3rem 0;
+          }
+
+          .hero-content {
+            padding: 3rem 2rem;
+          }
+
+          .hero-title {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+          }
+
+          .hero-subtitle {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+          }
+
+          .hero-description {
+            font-size: 1.5rem;
+            margin-bottom: 2.5rem;
+            max-width: 800px;
+          }
+
+          .cta-buttons {
+            gap: 1.5rem;
+          }
+
+          .btn {
+            padding: 1.2rem 2.5rem;
             font-size: 1.2rem;
+          }
+        }
+
+        /* Standard Desktop */
+        @media (min-width: 1200px) and (max-width: 1919px) {
+          .hero-content {
+            padding: 2.5rem 1.5rem;
+          }
+
+          .hero-title {
+            font-size: 4rem;
+          }
+
+          .hero-subtitle {
+            font-size: 1.8rem;
+          }
+
+          .hero-description {
+            font-size: 1.3rem;
+            max-width: 700px;
+          }
+
+          .btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+          }
+        }
+
+        /* Tablet Landscape */
+        @media (min-width: 768px) and (max-width: 1199px) {
+          .hero-content {
+            padding: 2rem 1rem;
+          }
+
+          .hero-title {
+            font-size: 3.5rem;
+          }
+
+          .hero-subtitle {
+            font-size: 1.5rem;
+          }
+
+          .hero-description {
+            font-size: 1.1rem;
+            max-width: 600px;
+          }
+
+          .btn {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+          }
+        }
+
+        /* Tablet Portrait */
+        @media (min-width: 481px) and (max-width: 767px) {
+          .hero-content {
+            text-align: center;
+            padding: 2rem 1rem;
+          }
+
+          .hero-title {
+            font-size: 3rem;
+          }
+
+          .hero-subtitle {
+            font-size: 1.3rem;
           }
 
           .hero-description {
@@ -262,17 +392,57 @@ const Hero = () => {
 
           .btn {
             width: 100%;
-            max-width: 300px;
+            max-width: 350px;
           }
         }
 
+        /* Mobile Devices */
         @media (max-width: 480px) {
+          .hero-content {
+            padding: 1.5rem 0.5rem;
+          }
+
           .hero-title {
             font-size: 2rem;
           }
 
           .hero-subtitle {
             font-size: 1rem;
+          }
+
+          .hero-description {
+            font-size: 0.9rem;
+          }
+
+          .btn {
+            padding: 0.7rem 1.2rem;
+            font-size: 0.9rem;
+            max-width: 280px;
+          }
+        }
+
+        /* Extra Small Mobile */
+        @media (max-width: 320px) {
+          .hero-content {
+            padding: 1rem 0.25rem;
+          }
+
+          .hero-title {
+            font-size: 1.8rem;
+          }
+
+          .hero-subtitle {
+            font-size: 0.9rem;
+          }
+
+          .hero-description {
+            font-size: 0.8rem;
+          }
+
+          .btn {
+            padding: 0.6rem 1rem;
+            font-size: 0.8rem;
+            max-width: 250px;
           }
         }
       `}</style>

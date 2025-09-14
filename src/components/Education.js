@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FaUniversity, FaExternalLinkAlt, FaGraduationCap, FaMapMarkerAlt } from 'react-icons/fa';
 

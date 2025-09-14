@@ -45,7 +45,7 @@ const Navbar = () => {
           whileHover={{ scale: 1.05 }}
         >
           <a href="#home" onClick={(e) => { e.preventDefault(); scrollToSection('#home'); }}>
-            Saurav Kumar
+            <img src="/images/logo.svg" alt="Saurav Kumar Logo" className="logo-img" />
           </a>
         </motion.div>
 
@@ -128,14 +128,19 @@ const Navbar = () => {
         }
 
         .nav-logo a {
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: var(--primary-color);
+          display: flex;
+          align-items: center;
           text-decoration: none;
-          background: var(--gradient-primary);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+        }
+
+        .logo-img {
+          height: 40px;
+          width: auto;
+          transition: all 0.3s ease;
+        }
+
+        .logo-img:hover {
+          transform: scale(1.05);
         }
 
         .nav-menu {

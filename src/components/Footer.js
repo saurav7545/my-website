@@ -21,6 +21,7 @@ const Footer = () => {
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
+              <img src="/images/logo.svg" alt="Saurav Kumar Logo" className="footer-logo" />
               <h3>Saurav Kumar</h3>
               <p>Computer Science Engineering Student</p>
             </motion.div>
@@ -125,6 +126,14 @@ const Footer = () => {
           grid-template-columns: 1fr 2fr;
           gap: 3rem;
           margin-bottom: 2rem;
+        }
+
+        .footer-logo {
+          height: 50px;
+          width: auto;
+          margin-bottom: 1rem;
+          filter: brightness(0) invert(1);
+          opacity: 0.9;
         }
 
         .footer-brand h3 {

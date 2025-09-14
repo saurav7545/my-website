@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="60" viewBox="0 0 200 60">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background Circle -->
+  <circle cx="30" cy="30" r="25" fill="url(#logoGradient)" opacity="0.1"/>
+  
+  <!-- Main Logo Icon -->
+  <g transform="translate(15, 15)">
+    <!-- Code Brackets -->
+    <path d="M8 5 L3 10 L8 15" stroke="url(#logoGradient)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M12 5 L17 10 L12 15" stroke="url(#logoGradient)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Central Dot -->
+    <circle cx="10" cy="10" r="2" fill="url(#logoGradient)"/>
+    
+    <!-- Code Lines -->
+    <line x1="5" y1="18" x2="15" y2="18" stroke="url(#logoGradient)" stroke-width="1.5" opacity="0.7"/>
+    <line x1="5" y1="22" x2="12" y2="22" stroke="url(#logoGradient)" stroke-width="1.5" opacity="0.5"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="65" y="25" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="url(#logoGradient)">Saurav Kumar</text>
+  <text x="65" y="42" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#666">Portfolio</text>
+</svg>

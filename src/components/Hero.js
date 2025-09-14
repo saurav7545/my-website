@@ -334,19 +334,24 @@ const Hero = () => {
           }
 
           .hero-title {
-            font-size: 5rem;
+            font-size: 6rem;
+            line-height: 1;
             margin-bottom: 1.5rem;
+            white-space: nowrap;
           }
 
           .hero-subtitle {
-            font-size: 2rem;
+            font-size: 2.5rem;
+            line-height: 1;
             margin-bottom: 1.5rem;
+            white-space: nowrap;
           }
 
           .hero-description {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
+            line-height: 1.6;
             margin-bottom: 2.5rem;
-            max-width: 800px;
+            max-width: 900px;
           }
 
           .cta-buttons {
@@ -366,21 +371,23 @@ const Hero = () => {
           }
 
           .hero-title {
-            font-size: 4rem;
-            line-height: 1.1;
+            font-size: 5rem;
+            line-height: 1;
             margin-bottom: 1.5rem;
+            white-space: nowrap;
           }
 
           .hero-subtitle {
-            font-size: 1.8rem;
-            line-height: 1.3;
+            font-size: 2.2rem;
+            line-height: 1;
             margin-bottom: 1.5rem;
+            white-space: nowrap;
           }
 
           .hero-description {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             line-height: 1.6;
-            max-width: 700px;
+            max-width: 800px;
             margin-bottom: 3rem;
           }
 

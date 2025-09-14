@@ -327,7 +327,7 @@ const AboutPerson = () => {
         }
 
         .hero-text h1 {
-          font-size: 3rem;
+          font-size: 4rem;
           font-weight: 800;
           color: var(--text-dark);
           margin-bottom: 1rem;
@@ -335,6 +335,8 @@ const AboutPerson = () => {
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
+          line-height: 1;
+          white-space: nowrap;
         }
 
         .hero-subtitle {

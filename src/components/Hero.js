@@ -367,15 +367,25 @@ const Hero = () => {
 
           .hero-title {
             font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
           }
 
           .hero-subtitle {
             font-size: 1.8rem;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
           }
 
           .hero-description {
             font-size: 1.3rem;
+            line-height: 1.6;
             max-width: 700px;
+            margin-bottom: 3rem;
+          }
+
+          .cta-buttons {
+            gap: 2rem;
           }
 
           .btn {
@@ -447,14 +457,24 @@ const Hero = () => {
 
           .hero-title {
             font-size: 2rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
           }
 
           .hero-subtitle {
             font-size: 1rem;
+            line-height: 1.3;
+            margin-bottom: 1rem;
           }
 
           .hero-description {
             font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 2rem;
+          }
+
+          .cta-buttons {
+            gap: 1rem;
           }
 
           .btn {

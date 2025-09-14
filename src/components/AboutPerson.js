@@ -525,19 +525,62 @@ const AboutPerson = () => {
 
           .hero-text h1 {
             font-size: 2rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+          }
+
+          .hero-text p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
           }
 
           .personal-info-grid {
             grid-template-columns: 1fr;
+            gap: 1rem;
           }
 
           .achievements-grid {
             grid-template-columns: 1fr;
+            gap: 1rem;
           }
 
           .cta-buttons {
             flex-direction: column;
             align-items: center;
+            gap: 1rem;
+          }
+
+          .about-cta h2 {
+            font-size: 1.8rem;
+            line-height: 1.3;
+          }
+
+          .about-cta p {
+            font-size: 1rem;
+            line-height: 1.5;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .hero-text h1 {
+            font-size: 1.8rem;
+            line-height: 1.2;
+          }
+
+          .hero-text p {
+            font-size: 0.9rem;
+            line-height: 1.4;
+          }
+
+          .about-cta h2 {
+            font-size: 1.6rem;
+            line-height: 1.3;
+          }
+
+          .about-cta p {
+            font-size: 0.9rem;
+            line-height: 1.4;
           }
         }
       `}</style>

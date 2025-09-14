@@ -1,10 +1,19 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FaInstagram, FaGithub, FaLinkedin, FaYoutube, FaUsers, FaCodeBranch, FaHandshake, FaPlayCircle } from 'react-icons/fa';
+import ImageSlider from './ImageSlider';
 
 const Social = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, threshold: 0.3 });
+
+  const socialImages = [
+    '/images/logo1.svg',
+    '/images/logo2.svg',
+    '/images/logo3.svg',
+    '/images/logo4.svg',
+    '/images/logo5.svg'
+  ];
 
   const socialPlatforms = [
     {
@@ -81,7 +90,11 @@ const Social = () => {
         >
           <motion.div className="social-header" variants={itemVariants}>
             <div className="section-header">
-              <img src="/images/logo.svg" alt="Saurav Kumar Logo" className="section-logo" />
+              <ImageSlider 
+                images={socialImages} 
+                interval={4000} 
+                className="section-logo-slider"
+              />
               <h2 className="section-title">Connect With Me</h2>
             </div>
             <p className="section-subtitle">
@@ -313,6 +326,20 @@ const Social = () => {
         .section-logo:hover {
           opacity: 1;
           transform: scale(1.05);
+        }
+
+        .section-logo-slider {
+          width: 40px;
+          height: 40px;
+        }
+
+        .section-logo-slider .slider-image {
+          width: 40px;
+          height: 40px;
+        }
+
+        .section-logo-slider .slider-dots {
+          display: none;
         }
 
         @media (max-width: 768px) {

@@ -1,9 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaHeart, FaCode, FaGraduationCap } from 'react-icons/fa';
+import ImageSlider from './ImageSlider';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+
+  const footerImages = [
+    '/images/logo1.svg',
+    '/images/logo2.svg',
+    '/images/logo3.svg',
+    '/images/logo4.svg',
+    '/images/logo5.svg'
+  ];
 
   return (
     <footer className="footer">
@@ -21,7 +30,11 @@ const Footer = () => {
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <img src="/images/logo.svg" alt="Saurav Kumar Logo" className="footer-logo" />
+              <ImageSlider 
+                images={footerImages} 
+                interval={7000} 
+                className="footer-logo-slider"
+              />
               <h3>Saurav Kumar</h3>
               <p>Computer Science Engineering Student</p>
             </motion.div>
@@ -135,6 +148,23 @@ const Footer = () => {
           margin-bottom: 1rem;
           filter: brightness(0) invert(1);
           opacity: 0.9;
+        }
+
+        .footer-logo-slider {
+          width: 50px;
+          height: 50px;
+          margin-bottom: 1rem;
+        }
+
+        .footer-logo-slider .slider-image {
+          width: 50px;
+          height: 50px;
+          filter: brightness(0) invert(1);
+          opacity: 0.9;
+        }
+
+        .footer-logo-slider .slider-dots {
+          display: none;
         }
 
         .footer-brand h3 {

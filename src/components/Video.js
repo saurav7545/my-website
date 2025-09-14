@@ -1,11 +1,20 @@
 import React, { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FaPlay, FaPlayCircle } from 'react-icons/fa';
+import ImageSlider from './ImageSlider';
 
 const Video = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, threshold: 0.3 });
   const [activeTab, setActiveTab] = useState('intro');
+
+  const videoImages = [
+    '/images/logo1.svg',
+    '/images/logo2.svg',
+    '/images/logo3.svg',
+    '/images/logo4.svg',
+    '/images/logo5.svg'
+  ];
 
   const videoTabs = [
     { id: 'intro', label: 'Introduction' },
@@ -83,7 +92,11 @@ const Video = () => {
         >
           <motion.div className="video-header" variants={itemVariants}>
             <div className="section-header">
-              <img src="/images/logo.svg" alt="Saurav Kumar Logo" className="section-logo" />
+              <ImageSlider 
+                images={videoImages} 
+                interval={5500} 
+                className="section-logo-slider"
+              />
               <h2 className="section-title">Video Introduction</h2>
             </div>
             <p className="section-subtitle">
@@ -411,6 +424,20 @@ const Video = () => {
         .section-logo:hover {
           opacity: 1;
           transform: scale(1.05);
+        }
+
+        .section-logo-slider {
+          width: 40px;
+          height: 40px;
+        }
+
+        .section-logo-slider .slider-image {
+          width: 40px;
+          height: 40px;
+        }
+
+        .section-logo-slider .slider-dots {
+          display: none;
         }
 
         @media (max-width: 768px) {

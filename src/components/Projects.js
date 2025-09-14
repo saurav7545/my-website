@@ -1,10 +1,19 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FaCalculator, FaTasks, FaLaptopCode, FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
+import ImageSlider from './ImageSlider';
 
 const Projects = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, threshold: 0.3 });
+
+  const projectImages = [
+    '/images/logo1.svg',
+    '/images/logo2.svg',
+    '/images/logo3.svg',
+    '/images/logo4.svg',
+    '/images/logo5.svg'
+  ];
 
   const projects = [
     {
@@ -86,7 +95,11 @@ const Projects = () => {
         >
           <motion.div className="projects-header" variants={itemVariants}>
             <div className="section-header">
-              <img src="/images/logo.svg" alt="Saurav Kumar Logo" className="section-logo" />
+              <ImageSlider 
+                images={projectImages} 
+                interval={4500} 
+                className="section-logo-slider"
+              />
               <h2 className="section-title">Featured Projects</h2>
             </div>
             <p className="section-subtitle">
@@ -377,6 +390,20 @@ const Projects = () => {
         .section-logo:hover {
           opacity: 1;
           transform: scale(1.05);
+        }
+
+        .section-logo-slider {
+          width: 40px;
+          height: 40px;
+        }
+
+        .section-logo-slider .slider-image {
+          width: 40px;
+          height: 40px;
+        }
+
+        .section-logo-slider .slider-dots {
+          display: none;
         }
 
         @media (max-width: 768px) {

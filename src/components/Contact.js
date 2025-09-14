@@ -1,10 +1,19 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FaEnvelope, FaGithub, FaMapMarkerAlt, FaPhone, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import ImageSlider from './ImageSlider';
 
 const Contact = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, threshold: 0.3 });
+
+  const contactImages = [
+    '/images/logo1.svg',
+    '/images/logo2.svg',
+    '/images/logo3.svg',
+    '/images/logo4.svg',
+    '/images/logo5.svg'
+  ];
 
   const contactInfo = [
     {
@@ -88,7 +97,11 @@ const Contact = () => {
         >
           <motion.div className="contact-header" variants={itemVariants}>
             <div className="section-header">
-              <img src="/images/logo.svg" alt="Saurav Kumar Logo" className="section-logo" />
+              <ImageSlider 
+                images={contactImages} 
+                interval={3500} 
+                className="section-logo-slider"
+              />
               <h2 className="section-title">Get In Touch</h2>
             </div>
             <p className="section-subtitle">
@@ -356,6 +369,20 @@ const Contact = () => {
         .section-logo:hover {
           opacity: 1;
           transform: scale(1.05);
+        }
+
+        .section-logo-slider {
+          width: 40px;
+          height: 40px;
+        }
+
+        .section-logo-slider .slider-image {
+          width: 40px;
+          height: 40px;
+        }
+
+        .section-logo-slider .slider-dots {
+          display: none;
         }
 
         @media (max-width: 480px) {

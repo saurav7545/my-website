@@ -2,9 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaUser, FaProjectDiagram, FaExternalLinkAlt } from 'react-icons/fa';
 import { ReactTyped } from 'react-typed';
+import ImageSlider from './ImageSlider';
 
 const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  const backgroundImages = [
+    '/images/bg1.svg',
+    '/images/logo1.svg',
+    '/images/logo2.svg',
+    '/images/logo3.svg',
+    '/images/logo4.svg'
+  ];
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -48,6 +57,14 @@ const Hero = () => {
         }}
         transition={{ type: "spring", stiffness: 150, damping: 15 }}
       />
+      
+      <div className="hero-image-slider">
+        <ImageSlider 
+          images={backgroundImages} 
+          interval={6000} 
+          className="background-slider"
+        />
+      </div>
       
       <motion.div
         className="hero-content"
@@ -145,6 +162,7 @@ const Hero = () => {
           position: relative;
           overflow: hidden;
           background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background-attachment: fixed;
         }
 
         .hero-background {
@@ -155,6 +173,31 @@ const Hero = () => {
           height: 200%;
           background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
           pointer-events: none;
+        }
+
+        .hero-image-slider {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+          opacity: 0.3;
+        }
+
+        .background-slider {
+          width: 100%;
+          height: 100%;
+        }
+
+        .background-slider .slider-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .background-slider .slider-dots {
+          display: none;
         }
 
         .hero-content {

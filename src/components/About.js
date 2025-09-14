@@ -1,10 +1,19 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FaCode, FaMobileAlt, FaDatabase, FaGraduationCap } from 'react-icons/fa';
+import ImageSlider from './ImageSlider';
 
 const About = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, threshold: 0.3 });
+
+  const aboutImages = [
+    '/images/logo1.svg',
+    '/images/logo2.svg',
+    '/images/logo3.svg',
+    '/images/logo4.svg',
+    '/images/logo5.svg'
+  ];
 
   const skills = [
     {
@@ -67,7 +76,11 @@ const About = () => {
         >
           <motion.div className="about-text" variants={itemVariants}>
             <div className="section-header">
-              <img src="/images/logo.svg" alt="Saurav Kumar Logo" className="section-logo" />
+              <ImageSlider 
+                images={aboutImages} 
+                interval={4000} 
+                className="section-logo-slider"
+              />
               <h2 className="section-title">About Me</h2>
             </div>
             <div className="about-description">
@@ -305,6 +318,20 @@ const About = () => {
           transform: scale(1.05);
         }
 
+        .section-logo-slider {
+          width: 40px;
+          height: 40px;
+        }
+
+        .section-logo-slider .slider-image {
+          width: 40px;
+          height: 40px;
+        }
+
+        .section-logo-slider .slider-dots {
+          display: none;
+        }
+
         @media (max-width: 480px) {
           .about-section {
             padding: 60px 0;
@@ -321,6 +348,16 @@ const About = () => {
           }
 
           .section-logo {
+            height: 35px;
+          }
+
+          .section-logo-slider {
+            width: 35px;
+            height: 35px;
+          }
+
+          .section-logo-slider .slider-image {
+            width: 35px;
             height: 35px;
           }
         }

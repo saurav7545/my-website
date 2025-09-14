@@ -60,6 +60,89 @@ const LoadingScreen = () => {
           </div>
         </motion.div>
       )}
+      <style jsx>{`
+        .loading-screen {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 10000;
+        }
+
+        .loading-content {
+          text-align: center;
+          color: white;
+        }
+
+        .loading-logo {
+          margin-bottom: 2rem;
+        }
+
+        .logo-circle {
+          width: 120px;
+          height: 120px;
+          border: 4px solid rgba(255, 255, 255, 0.3);
+          border-top: 4px solid white;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto;
+          position: relative;
+          animation: spin 2s linear infinite;
+        }
+
+        .logo-brackets {
+          font-size: 3rem;
+          font-weight: bold;
+          display: flex;
+          gap: 1rem;
+        }
+
+        .loading-text {
+          font-size: 2rem;
+          font-weight: 700;
+          margin-bottom: 2rem;
+          background: linear-gradient(45deg, #fff, #f0f0f0);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .loading-bar {
+          width: 300px;
+          height: 4px;
+          background: rgba(255, 255, 255, 0.3);
+          border-radius: 2px;
+          overflow: hidden;
+          margin: 0 auto;
+        }
+
+        .loading-bar::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, white, transparent);
+          animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+
+        @keyframes shimmer {
+          0% { left: -100%; }
+          100% { left: 100%; }
+        }
+      `}</style>
     </AnimatePresence>
   );
 };

@@ -1,10 +1,19 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FaUniversity, FaExternalLinkAlt, FaGraduationCap, FaMapMarkerAlt } from 'react-icons/fa';
+import ImageSlider from './ImageSlider';
 
 const Education = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, threshold: 0.3 });
+
+  const educationImages = [
+    '/images/logo1.svg',
+    '/images/logo2.svg',
+    '/images/logo3.svg',
+    '/images/logo4.svg',
+    '/images/logo5.svg'
+  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -40,7 +49,11 @@ const Education = () => {
         >
           <motion.div className="education-header" variants={itemVariants}>
             <div className="section-header">
-              <img src="/images/logo.svg" alt="Saurav Kumar Logo" className="section-logo" />
+              <ImageSlider 
+                images={educationImages} 
+                interval={6000} 
+                className="section-logo-slider"
+              />
               <h2 className="section-title">Education & Academic Journey</h2>
             </div>
             <p className="section-subtitle">
@@ -326,6 +339,20 @@ const Education = () => {
         .section-logo:hover {
           opacity: 1;
           transform: scale(1.05);
+        }
+
+        .section-logo-slider {
+          width: 40px;
+          height: 40px;
+        }
+
+        .section-logo-slider .slider-image {
+          width: 40px;
+          height: 40px;
+        }
+
+        .section-logo-slider .slider-dots {
+          display: none;
         }
 
         @media (max-width: 480px) {

@@ -1,10 +1,19 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FaCamera, FaImages } from 'react-icons/fa';
+import ImageSlider from './ImageSlider';
 
 const Gallery = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, threshold: 0.3 });
+
+  const galleryImages = [
+    '/images/logo1.svg',
+    '/images/logo2.svg',
+    '/images/logo3.svg',
+    '/images/logo4.svg',
+    '/images/logo5.svg'
+  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -40,7 +49,11 @@ const Gallery = () => {
         >
           <motion.div className="gallery-header" variants={itemVariants}>
             <div className="section-header">
-              <img src="/images/logo.svg" alt="Saurav Kumar Logo" className="section-logo" />
+              <ImageSlider 
+                images={galleryImages} 
+                interval={5000} 
+                className="section-logo-slider"
+              />
               <h2 className="section-title">Photo Gallery</h2>
             </div>
             <p className="section-subtitle">
@@ -225,6 +238,20 @@ const Gallery = () => {
         .section-logo:hover {
           opacity: 1;
           transform: scale(1.05);
+        }
+
+        .section-logo-slider {
+          width: 40px;
+          height: 40px;
+        }
+
+        .section-logo-slider .slider-image {
+          width: 40px;
+          height: 40px;
+        }
+
+        .section-logo-slider .slider-dots {
+          display: none;
         }
 
         @media (max-width: 768px) {

@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
+import ImageSlider from './ImageSlider';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const logoImages = [
+    '/images/logo1.svg',
+    '/images/logo2.svg',
+    '/images/logo3.svg',
+    '/images/logo4.svg',
+    '/images/logo5.svg',
+    '/images/logo6.svg'
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,7 +61,11 @@ const Navbar = () => {
           whileHover={{ scale: 1.05 }}
         >
           <a href="#home" onClick={(e) => { e.preventDefault(); scrollToSection('#home'); }}>
-            <img src="/images/logo.svg" alt="Saurav Kumar Logo" className="logo-img" />
+            <ImageSlider 
+              images={logoImages} 
+              interval={5000} 
+              className="logo-slider"
+            />
           </a>
         </motion.div>
 
@@ -149,6 +163,20 @@ const Navbar = () => {
           transform: scale(1.05);
         }
 
+        .logo-slider {
+          width: 40px;
+          height: 40px;
+        }
+
+        .logo-slider .slider-image {
+          width: 40px;
+          height: 40px;
+        }
+
+        .logo-slider .slider-dots {
+          display: none;
+        }
+
         .nav-menu {
           display: flex;
           list-style: none;
@@ -209,6 +237,16 @@ const Navbar = () => {
             height: 60px;
           }
 
+          .logo-slider {
+            width: 60px;
+            height: 60px;
+          }
+
+          .logo-slider .slider-image {
+            width: 60px;
+            height: 60px;
+          }
+
           .nav-menu {
             gap: 3rem;
           }
@@ -231,6 +269,16 @@ const Navbar = () => {
           }
 
           .logo-img {
+            height: 55px;
+          }
+
+          .logo-slider {
+            width: 55px;
+            height: 55px;
+          }
+
+          .logo-slider .slider-image {
+            width: 55px;
             height: 55px;
           }
 
@@ -322,6 +370,16 @@ const Navbar = () => {
           }
 
           .logo-img {
+            height: 30px;
+          }
+
+          .logo-slider {
+            width: 30px;
+            height: 30px;
+          }
+
+          .logo-slider .slider-image {
+            width: 30px;
             height: 30px;
           }
 

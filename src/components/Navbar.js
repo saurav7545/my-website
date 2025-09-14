@@ -18,6 +18,7 @@ const Navbar = () => {
   const navItems = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
+    { name: 'About Me', href: '/about-person' },
     { name: 'Projects', href: '#projects' },
     { name: 'Gallery', href: '#gallery' },
     { name: 'Social', href: '#social' },
@@ -26,9 +27,14 @@ const Navbar = () => {
   ];
 
   const scrollToSection = (href) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (href.startsWith('#')) {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // For external links, navigate normally
+      window.location.href = href;
     }
     setIsOpen(false);
   };

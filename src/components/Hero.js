@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaUser, FaProjectDiagram, FaExternalLinkAlt } from 'react-icons/fa';
-import Typewriter from 'react-typed';
+import { ReactTyped } from 'react-typed';
 
 const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -65,7 +65,7 @@ const Hero = () => {
           </motion.h1>
           
           <motion.h2 className="hero-subtitle" variants={itemVariants}>
-            <Typewriter
+            <ReactTyped
               strings={[
                 'Computer Science Engineering Student',
                 'Web Developer',
@@ -89,14 +89,10 @@ const Hero = () => {
 
         <motion.div className="cta-buttons" variants={itemVariants}>
           <motion.a
-            href="#about"
+            href="/about-person"
             className="btn btn-primary"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
-            onClick={(e) => {
-              e.preventDefault();
-              document.querySelector('#about').scrollIntoView({ behavior: 'smooth' });
-            }}
           >
             <FaUser /> Personal About Me
           </motion.a>

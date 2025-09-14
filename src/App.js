@@ -1,8 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
+import AboutPerson from './components/AboutPerson';
 import Projects from './components/Projects';
 import Gallery from './components/Gallery';
 import Social from './components/Social';
@@ -26,14 +27,21 @@ function App() {
         <DarkModeToggle />
         <Navbar />
         <main>
-          <Hero />
-          <About />
-          <Projects />
-          <Gallery />
-          <Social />
-          <Video />
-          <Education />
-          <Contact />
+          <Routes>
+            <Route path="/" element={
+              <>
+                <Hero />
+                <About />
+                <Projects />
+                <Gallery />
+                <Social />
+                <Video />
+                <Education />
+                <Contact />
+              </>
+            } />
+            <Route path="/about-person" element={<AboutPerson />} />
+          </Routes>
         </main>
         <Footer />
         <ScrollToTop />

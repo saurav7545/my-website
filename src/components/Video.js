@@ -82,7 +82,10 @@ const Video = () => {
           animate={isInView ? "visible" : "hidden"}
         >
           <motion.div className="video-header" variants={itemVariants}>
-            <h2 className="section-title">Video Introduction</h2>
+            <div className="section-header">
+              <img src="/images/logo.svg" alt="Saurav Kumar Logo" className="section-logo" />
+              <h2 className="section-title">Video Introduction</h2>
+            </div>
             <p className="section-subtitle">
               Watch my introduction video to know more about me
             </p>
@@ -389,6 +392,25 @@ const Video = () => {
           color: var(--text-light);
           margin: 0 0 1rem 1rem;
           line-height: 1.5;
+        }
+
+        .section-header {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        .section-logo {
+          height: 40px;
+          width: auto;
+          opacity: 0.8;
+          transition: all 0.3s ease;
+        }
+
+        .section-logo:hover {
+          opacity: 1;
+          transform: scale(1.05);
         }
 
         @media (max-width: 768px) {

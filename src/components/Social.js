@@ -30,10 +30,10 @@ const Social = () => {
       name: 'LinkedIn',
       description: 'Connect professionally and view my experience',
       stats: { icon: <FaHandshake />, number: '100+', label: 'Connections' },
-      link: '#',
+      link: 'https://www.linkedin.com/in/saurav7545/',
       color: '#0077B5',
       gradient: 'linear-gradient(135deg, #0077B5 0%, #005885 100%)',
-      comingSoon: true
+      comingSoon: false
     },
     {
       icon: <FaYoutube />,
@@ -80,7 +80,10 @@ const Social = () => {
           animate={isInView ? "visible" : "hidden"}
         >
           <motion.div className="social-header" variants={itemVariants}>
-            <h2 className="section-title">Connect With Me</h2>
+            <div className="section-header">
+              <img src="/images/logo.svg" alt="Saurav Kumar Logo" className="section-logo" />
+              <h2 className="section-title">Connect With Me</h2>
+            </div>
             <p className="section-subtitle">
               Follow my journey on social media
             </p>
@@ -291,6 +294,25 @@ const Social = () => {
         .social-btn.coming-soon:hover {
           transform: none;
           box-shadow: none;
+        }
+
+        .section-header {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        .section-logo {
+          height: 40px;
+          width: auto;
+          opacity: 0.8;
+          transition: all 0.3s ease;
+        }
+
+        .section-logo:hover {
+          opacity: 1;
+          transform: scale(1.05);
         }
 
         @media (max-width: 768px) {

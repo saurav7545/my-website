@@ -41,9 +41,9 @@ const Contact = () => {
     {
       icon: <FaLinkedin />,
       name: 'LinkedIn',
-      link: '#',
+      link: 'https://www.linkedin.com/in/saurav7545/',
       color: '#0077B5',
-      comingSoon: true
+      comingSoon: false
     },
     {
       icon: <FaInstagram />,

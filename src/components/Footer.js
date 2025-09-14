@@ -51,6 +51,7 @@ const Footer = () => {
                 <ul>
                   <li><a href="mailto:sauravkumarbgs75@gmail.com">Email</a></li>
                   <li><a href="https://github.com/saurav7545" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                  <li><a href="https://www.linkedin.com/in/saurav7545/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
                   <li><a href="https://www.instagram.com/saura_v75450/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
                 </ul>
               </div>

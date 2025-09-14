@@ -239,6 +239,16 @@ const AboutPerson = () => {
               >
                 View My Instagram
               </motion.a>
+              <motion.a
+                href="https://www.linkedin.com/in/saurav7545/"
+                className="btn btn-secondary"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                View My LinkedIn
+              </motion.a>
             </div>
           </motion.div>
         </motion.div>

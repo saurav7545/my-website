@@ -39,7 +39,10 @@ const Gallery = () => {
           animate={isInView ? "visible" : "hidden"}
         >
           <motion.div className="gallery-header" variants={itemVariants}>
-            <h2 className="section-title">Photo Gallery</h2>
+            <div className="section-header">
+              <img src="/images/logo.svg" alt="Saurav Kumar Logo" className="section-logo" />
+              <h2 className="section-title">Photo Gallery</h2>
+            </div>
             <p className="section-subtitle">
               A glimpse into my journey and experiences
             </p>
@@ -203,6 +206,25 @@ const Gallery = () => {
           font-weight: 600;
           color: var(--text-dark);
           font-size: 0.9rem;
+        }
+
+        .section-header {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        .section-logo {
+          height: 40px;
+          width: auto;
+          opacity: 0.8;
+          transition: all 0.3s ease;
+        }
+
+        .section-logo:hover {
+          opacity: 1;
+          transform: scale(1.05);
         }
 
         @media (max-width: 768px) {

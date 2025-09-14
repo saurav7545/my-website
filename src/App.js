@@ -12,12 +12,18 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import ParticleBackground from './components/ParticleBackground';
+import DarkModeToggle from './components/DarkModeToggle';
+import ScrollProgress from './components/ScrollProgress';
+import LoadingScreen from './components/LoadingScreen';
 
 function App() {
   return (
     <Router>
       <div className="App">
+        <LoadingScreen />
         <ParticleBackground />
+        <ScrollProgress />
+        <DarkModeToggle />
         <Navbar />
         <main>
           <Hero />

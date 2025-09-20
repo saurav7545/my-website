@@ -19,14 +19,14 @@ const Contact = () => {
     {
       icon: <FaEnvelope />,
       title: 'Email',
-      value: 'sauravkumarbgs75@gmail.com',
+      value: 'Click here',
       link: 'mailto:sauravkumarbgs75@gmail.com',
       color: '#e74c3c'
     },
     {
       icon: <FaGithub />,
       title: 'GitHub',
-      value: 'github.com/saurav7545',
+      value: 'click here',
       link: 'https://github.com/saurav7545',
       color: '#333'
     },

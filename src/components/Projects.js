@@ -39,7 +39,7 @@ const Projects = () => {
     {
       id: 3,
       icon: <FaLaptopCode />,
-      title: 'Portfolio Website',
+      title: 'Bus tracking system',
       description: 'A modern, responsive portfolio showcasing skills and projects with beautiful animations.',
       technologies: ['React.js', 'CSS3', 'JavaScript', 'Framer Motion'],
       demoLink: '#',

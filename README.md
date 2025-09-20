@@ -124,12 +124,6 @@ The website is fully responsive and optimized for:
 - **Code Splitting** - Faster initial load
 - **SEO Optimized** - Meta tags and structured data
 
-## 🔧 Available Scripts
-
-- `npm start` - Start development server
-- `npm run build` - Build for production
-- `npm test` - Run tests
-- `npm run eject` - Eject from Create React App
 
 ## 📄 License
 

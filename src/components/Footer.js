@@ -47,14 +47,18 @@ const Footer = () => {
                   <li><a href="#about">About</a></li>
                   <li><a href="#projects">Projects</a></li>
                   <li><a href="#contact">Contact</a></li>
+                 
                 </ul>
               </div>
+              
 
               <div className="footer-section">
                 <h4>Projects</h4>
                 <ul>
                   <li><a href="https://github.com/saurav7545/calculator.git" target="_blank" rel="noopener noreferrer">Calculator</a></li>
                   <li><a href="https://indiantodolist.netlify.app/login/login.html" target="_blank" rel="noopener noreferrer">Todo List</a></li>
+                  <li><a href="https://github.com/saurav7545/youtube_audio_download" target="_blank" rel="noopener noreferrer">Youtube Audio Downloader</a></li>
+                  <li><a href="#" target="_blank" rel="noopener noreferrer">Bus Tracking System</a></li>
                   <li><a href="/projects" target="_blank" rel="noopener noreferrer">All Projects</a></li>
                 </ul>
               </div>
@@ -97,6 +101,7 @@ const Footer = () => {
                 >
                   <FaGraduationCap /> CS Student
                 </motion.span>
+                
               </div>
             </div>
 

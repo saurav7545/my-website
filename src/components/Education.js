@@ -62,16 +62,7 @@ const Education = () => {
           </motion.div>
 
           <motion.div className="education-card" variants={itemVariants}>
-            <motion.div
-              className="college-image"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <img
-                src="/images/placeholder.svg"
-                alt="Shivalik College of Engineering"
-              />
-            </motion.div>
+            
 
             <motion.div
               className="college-logo"
@@ -101,6 +92,7 @@ const Education = () => {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
+              style={{ textDecoration: 'none' }}
             >
               <FaExternalLinkAlt /> Visit College Website
             </motion.a>

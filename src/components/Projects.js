@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { FaCalculator, FaTasks, FaLaptopCode, FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
+import { FaCalculator, FaTasks, FaLaptopCode, FaExternalLinkAlt, FaGithub ,FaYoutube} from 'react-icons/fa';
 import ImageSlider from './ImageSlider';
 
 const Projects = () => {
@@ -38,6 +38,17 @@ const Projects = () => {
     },
     {
       id: 3,
+      icon: <FaYoutube />,
+      title: 'Youtube audio downloader',
+      description: 'Download youtube audio in mp4 format. Two options for downloading audio through playlist: 1. single link and 2. multiple links through playlist. Visit my GitHub page for more details.',
+      technologies: ['python', 'python library'],
+      demoLink: '',
+      githubLink: 'https://github.com/saurav7545/youtube_audio_download',
+      status: 'live'
+    },
+    
+    {
+      id: 4,
       icon: <FaLaptopCode />,
       title: 'Bus tracking system',
       description: 'A modern, responsive portfolio showcasing skills and projects with beautiful animations.',

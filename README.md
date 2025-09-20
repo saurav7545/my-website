@@ -31,23 +31,20 @@ A modern, responsive portfolio website built with React.js showcasing my skills,
 
 ## 📦 Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/saurav7545/portfolio-react.git
-   cd portfolio-react
-   ```
 
-2. **Install dependencies**
+ 
+
+1. **Install dependencies**
    ```bash
    npm install
    ```
 
-3. **Start the development server**
+2. **Start the development server**
    ```bash
    npm start
    ```
 
-4. **Open your browser**
+3. **Open your browser**
    Navigate to `http://localhost:3000`
 
 ## 🚀 Deployment

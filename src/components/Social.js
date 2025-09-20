@@ -20,7 +20,7 @@ const Social = () => {
       icon: <FaInstagram />,
       name: 'Instagram',
       description: 'Follow my daily life and behind-the-scenes',
-      stats: { icon: <FaUsers />, number: '500+', label: 'Followers' },
+      stats: { icon: <FaUsers />,  label: 'Followers' },
       link: 'https://www.instagram.com/saura_v75450/',
       color: '#E4405F',
       gradient: 'linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)'
@@ -29,7 +29,7 @@ const Social = () => {
       icon: <FaGithub />,
       name: 'GitHub',
       description: 'Check out my coding projects and contributions',
-      stats: { icon: <FaCodeBranch />, number: '10+', label: 'Repositories' },
+      stats: { icon: <FaCodeBranch />, number: '6+', label: 'Repositories' },
       link: 'https://github.com/saurav7545',
       color: '#333',
       gradient: 'linear-gradient(135deg, #333 0%, #555 100%)'

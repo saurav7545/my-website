@@ -171,7 +171,7 @@ const Projects = () => {
                     </span>
                   ) : 
                   project.status === 'github' ? (
-                    <span className="project-link github-link">
+                    <span className="project-link github-project-link">
                       <FaGithub /> Code Only github
                     </span>
                   ) : (
@@ -215,6 +215,17 @@ const Projects = () => {
           background: var(--bg-light);
           padding: 100px 0;
         }
+        .status-badge.github-project {
+  background: linear-gradient(135deg,rgb(26, 69, 213), #8e44ad);
+  color: white;
+}
+
+.github-project-link {
+  background: linear-gradient(135deg, #9b59b6, #8e44ad);
+  color: white;
+  cursor: not-allowed;
+}
+
 
         .projects-header {
           text-align: center;

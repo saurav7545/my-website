@@ -42,20 +42,20 @@ const Projects = () => {
       title: 'Youtube audio downloader',
       description: 'Download youtube audio in mp4 format. Two options for downloading audio through playlist: 1. single link and 2. multiple links through playlist. Visit my GitHub page for more details.',
       technologies: ['python', 'python library'],
-      demoLink: '',
+      demoLink: '#',
       githubLink: 'https://github.com/saurav7545/youtube_audio_download',
-      status: 'live'
+      status: 'github'
     },
     
     {
       id: 4,
       icon: <FaLaptopCode />,
-      title: 'Bus tracking system',
-      description: 'A modern, responsive portfolio showcasing skills and projects with beautiful animations.',
-      technologies: ['React.js', 'CSS3', 'JavaScript', 'Framer Motion'],
+      title: 'SmartBus',
+      description: 'A bus tracking system that allows you to track the location of a bus in real-time. It uses the Google Maps API to display the bus location on a map.',
+      technologies: ['React.js', 'CSS3', 'MySQL Database', 'Framer Motion','Django'],
       demoLink: '#',
-      githubLink: '#',
-      status: 'current'
+      githubLink: 'https://github.com/saurav7545/SmartBus.git',
+      status: 'github'
     }
   ];
 
@@ -90,6 +90,8 @@ const Projects = () => {
         return <span className="status-badge coming-soon">Demo Coming Soon</span>;
       case 'current':
         return <span className="status-badge current">Current Project</span>;
+      case 'github':
+        return <span className="status-badge github-only">GitHub Project</span>;
       default:
         return null;
     }
@@ -166,6 +168,11 @@ const Projects = () => {
                   ) : project.status === 'demo-coming-soon' ? (
                     <span className="project-link coming-soon-link">
                       <FaExternalLinkAlt /> Demo Coming Soon
+                    </span>
+                  ) : 
+                  project.status === 'github' ? (
+                    <span className="project-link github-link">
+                      <FaGithub /> Code Only github
                     </span>
                   ) : (
                     <span className="project-link current-link">

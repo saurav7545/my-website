@@ -93,17 +93,14 @@ const AboutPerson = () => {
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <img 
-                  src="/images/placeholder.svg" 
+                  src="/images/mypic.jpg" 
                   alt="Saurav Kumar"
                 />
-                <div className="image-overlay">
-                  <h3>Saurav Kumar</h3>
-                  <p>CS Engineering Student</p>
-                </div>
+                
               </motion.div>
               
               <div className="hero-text">
-                <h1>About Saurav Kumar</h1>
+                <h1>Mr.Saurav Kumar</h1>
                 <p className="hero-subtitle">
                   A passionate Computer Science Engineering student with a love for technology and innovation
                 </p>
@@ -290,7 +287,8 @@ const AboutPerson = () => {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          border-radius: 50%;
+          border-radius: 60%;
+          border: 2px solid var(--primary-color);
         }
 
         .image-overlay {

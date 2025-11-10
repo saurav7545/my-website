@@ -15,7 +15,7 @@ import ScrollToTop from './components/ScrollToTop';
 import ParticleBackground from './components/ParticleBackground';
 import ScrollProgress from './components/ScrollProgress';
 import LoadingScreen from './components/LoadingScreen';
-import Chatbot from './components/chatbot';
+
 
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
           <Routes>
             <Route path="/" element={
               <>
-                <Chatbot />
+               
                 <Hero />
                 <About />
                 <Projects />

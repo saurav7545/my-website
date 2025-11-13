@@ -22,9 +22,9 @@ const Projects = () => {
       title: 'Advanced Calculator',
       description: 'A feature-rich calculator with scientific functions, history tracking, and modern UI design.',
       technologies: ['JavaScript', 'CSS3', 'HTML5', 'Math.js'],
-      demoLink: '#',
+      demoLink: 'https://calsk.netlify.app/',
       githubLink: 'https://github.com/saurav7545/calculator.git',
-      status: 'demo-coming-soon'
+      status: 'live'
     },
     {
       id: 2,

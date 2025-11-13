@@ -93,7 +93,7 @@ const AboutPerson = () => {
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <img 
-                  src="/images/mypic.jpg" 
+                  src="/images/placeholder.svg" 
                   alt="Saurav Kumar"
                 />
                 

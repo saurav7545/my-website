@@ -33,15 +33,15 @@ function App() {
                
                 <Hero />
                 <About />
-                <Projects />
                 <Gallery />
                 <Social />
                 <Video />
                 <Education />
                 <Contact />
               </>
-            } />
-            <Route path="/about-person" element={<AboutPerson />} />
+              } />
+              <Route path="/about-person" element={<AboutPerson />} />
+              <Route path="/projects" element={<Projects />} />
           </Routes>
         </main>
         <Footer />

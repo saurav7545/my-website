@@ -4,6 +4,18 @@ import { FaUser, FaProjectDiagram, FaExternalLinkAlt } from 'react-icons/fa';
 import { ReactTyped } from 'react-typed';
 import ImageSlider from './ImageSlider';
 
+const highlightBadges = [
+  { label: 'Focus', value: 'Full Stack • Cloud • UI' },
+  { label: 'Currently', value: 'Building immersive web systems' },
+  { label: 'Open For', value: 'Internships & freelance collabs' },
+];
+
+const stats = [
+  { label: 'Live Projects on Github', value: '12+' },
+  { label: 'Users Impacted', value: '10K+' },
+  { label: 'Hackathon participation', value: '01' },
+];
+
 const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -77,8 +89,9 @@ const Hero = () => {
             className="hero-title"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300 }}
+            style={{ color: '#ffffff' }}
           >
-            Saurav Kumar
+            Hi, I'm Saurav
           </motion.h1>
           
           <motion.h2 className="hero-subtitle" variants={itemVariants}>
@@ -102,6 +115,20 @@ const Hero = () => {
             Currently pursuing Computer Science Engineering at Shivalik College of Engineering,
             specializing in web development, algorithms, and software engineering.
           </motion.p>
+        </motion.div>
+
+        <motion.div
+          className="hero-highlight-grid"
+          variants={itemVariants}
+          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 10 }}
+        >
+          {highlightBadges.map((badge) => (
+            <div className="highlight-card" key={badge.label}>
+              <p className="badge-label">{badge.label}</p>
+              <p className="badge-value">{badge.value}</p>
+            </div>
+          ))}
         </motion.div>
 
         <motion.div className="cta-buttons" variants={itemVariants}>
@@ -139,6 +166,15 @@ const Hero = () => {
           </motion.a>
         </motion.div>
 
+        <motion.div className="hero-stats" variants={itemVariants}>
+          {stats.map((stat) => (
+            <div className="stat-card" key={stat.label}>
+              <p className="stat-value">{stat.value}</p>
+              <p className="stat-label">{stat.label}</p>
+            </div>
+          ))}
+        </motion.div>
+
         <motion.div
           className="scroll-indicator"
           variants={itemVariants}
@@ -161,8 +197,32 @@ const Hero = () => {
           justify-content: center;
           position: relative;
           overflow: hidden;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: radial-gradient(circle at top, rgba(99, 102, 241, 0.4), transparent 45%),
+            linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e1b4b 100%);
           background-attachment: fixed;
+        }
+
+        .hero-section::before,
+        .hero-section::after {
+          content: "";
+          position: absolute;
+          width: 340px;
+          height: 340px;
+          border-radius: 50%;
+          filter: blur(120px);
+          opacity: 0.55;
+        }
+
+        .hero-section::before {
+          top: 5%;
+          left: 10%;
+          background: rgba(248, 113, 113, 0.4);
+        }
+
+        .hero-section::after {
+          bottom: 5%;
+          right: 10%;
+          background: rgba(59, 130, 246, 0.35);
         }
 
         .hero-background {
@@ -171,7 +231,22 @@ const Hero = () => {
           left: -50%;
           width: 200%;
           height: 200%;
-          background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+          background:
+            radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%),
+            repeating-linear-gradient(
+              0deg,
+              rgba(248, 250, 252, 0.05) 0,
+              rgba(248, 250, 252, 0.05) 1px,
+              transparent 1px,
+              transparent 60px
+            ),
+            repeating-linear-gradient(
+              90deg,
+              rgba(248, 250, 252, 0.05) 0,
+              rgba(248, 250, 252, 0.05) 1px,
+              transparent 1px,
+              transparent 60px
+            );
           pointer-events: none;
         }
 
@@ -205,37 +280,94 @@ const Hero = () => {
           color: white;
           z-index: 2;
           position: relative;
-          max-width: 800px;
-          padding: 0 20px;
+          max-width: 920px;
+          padding: 3rem 1.5rem;
+          border-radius: 32px;
+          backdrop-filter: blur(18px);
+          background: rgba(15, 23, 42, 0.55);
+          border: 1px solid rgba(148, 163, 184, 0.2);
+          box-shadow: 0 25px 80px rgba(2, 6, 23, 0.6);
+        }
+
+        .hero-text {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
         }
 
         .hero-title {
           font-size: 4rem;
           font-weight: 800;
           margin-bottom: 1rem;
-          background: linear-gradient(45deg, #fff, #f0f0f0);
+          color: #ffffff !important;
+          background: linear-gradient(45deg, #ffffff, #e0e7ff, #ffffff);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-          text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+          text-shadow: 0 2px 10px rgba(255, 255, 255, 0.5), 0 4px 20px rgba(0, 0, 0, 0.3);
+          line-height: 1.2;
+          word-wrap: break-word;
+          white-space: normal;
+          display: block;
+          width: 100%;
+          opacity: 1 !important;
+          visibility: visible !important;
+        }
+
+        @supports not (-webkit-background-clip: text) {
+          .hero-title {
+            -webkit-text-fill-color: #ffffff;
+            color: #ffffff;
+          }
         }
 
         .hero-subtitle {
-          font-size: 1.5rem;
-          font-weight: 400;
+          font-size: 1.6rem;
+          font-weight: 500;
           margin-bottom: 2rem;
-          opacity: 0.9;
+          opacity: 0.95;
           min-height: 2rem;
         }
 
         .hero-description {
           font-size: 1.2rem;
-          line-height: 1.6;
-          margin-bottom: 3rem;
-          opacity: 0.9;
-          max-width: 600px;
+          line-height: 1.75;
+          margin-bottom: 2rem;
+          opacity: 0.85;
+          max-width: 620px;
           margin-left: auto;
           margin-right: auto;
+        }
+
+        .hero-highlight-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+          gap: 1rem;
+          margin-bottom: 3rem;
+        }
+
+        .highlight-card {
+          text-align: left;
+          background: rgba(15, 23, 42, 0.8);
+          border: 1px solid rgba(99, 102, 241, 0.3);
+          border-radius: 1.2rem;
+          padding: 1rem 1.2rem;
+        }
+
+        .badge-label {
+          text-transform: uppercase;
+          letter-spacing: 0.2em;
+          font-size: 0.65rem;
+          color: #a5b4fc;
+          margin: 0 0 0.25rem;
+        }
+
+        .badge-value {
+          margin: 0;
+          font-size: 0.95rem;
+          color: #e0e7ff;
         }
 
         .cta-buttons {
@@ -243,7 +375,38 @@ const Hero = () => {
           gap: 1rem;
           justify-content: center;
           flex-wrap: wrap;
-          margin-bottom: 4rem;
+          margin-bottom: 2.5rem;
+        }
+
+        .hero-stats {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+          gap: 1rem;
+          padding: 1.2rem;
+          border-radius: 1.5rem;
+          background: rgba(59, 130, 246, 0.08);
+          border: 1px solid rgba(59, 130, 246, 0.25);
+          margin-bottom: 3rem;
+        }
+
+        .stat-card {
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+        }
+
+        .stat-value {
+          margin: 0;
+          font-size: 2rem;
+          font-weight: 700;
+        }
+
+        .stat-label {
+          margin: 0;
+          text-transform: uppercase;
+          letter-spacing: 0.14em;
+          font-size: 0.65rem;
+          color: rgba(226, 232, 240, 0.8);
         }
 
         .scroll-indicator {
@@ -293,12 +456,15 @@ const Hero = () => {
           }
 
           .hero-content {
-            padding: 4rem 3rem;
+            padding: 4rem 3.5rem;
           }
 
           .hero-title {
             font-size: 6rem;
             margin-bottom: 2rem;
+            line-height: 1.2;
+            word-wrap: break-word;
+            white-space: normal;
           }
 
           .hero-subtitle {
@@ -330,14 +496,15 @@ const Hero = () => {
           }
 
           .hero-content {
-            padding: 3rem 2rem;
+            padding: 3rem 2.5rem;
           }
 
           .hero-title {
             font-size: 6rem;
-            line-height: 1;
+            line-height: 1.2;
             margin-bottom: 1.5rem;
-            white-space: nowrap;
+            white-space: normal;
+            word-wrap: break-word;
           }
 
           .hero-subtitle {
@@ -372,9 +539,10 @@ const Hero = () => {
 
           .hero-title {
             font-size: 5rem;
-            line-height: 1;
+            line-height: 1.2;
             margin-bottom: 1.5rem;
-            white-space: nowrap;
+            white-space: normal;
+            word-wrap: break-word;
           }
 
           .hero-subtitle {
@@ -409,6 +577,9 @@ const Hero = () => {
 
           .hero-title {
             font-size: 3.5rem;
+            line-height: 1.2;
+            word-wrap: break-word;
+            white-space: normal;
           }
 
           .hero-subtitle {
@@ -435,6 +606,9 @@ const Hero = () => {
 
           .hero-title {
             font-size: 3rem;
+            line-height: 1.2;
+            word-wrap: break-word;
+            white-space: normal;
           }
 
           .hero-subtitle {
@@ -464,8 +638,12 @@ const Hero = () => {
 
           .hero-title {
             font-size: 2rem;
-            line-height: 1.2;
+            line-height: 1.3;
             margin-bottom: 1rem;
+            word-wrap: break-word;
+            white-space: normal;
+            display: block;
+            width: 100%;
           }
 
           .hero-subtitle {
@@ -499,6 +677,11 @@ const Hero = () => {
 
           .hero-title {
             font-size: 1.8rem;
+            line-height: 1.3;
+            word-wrap: break-word;
+            white-space: normal;
+            display: block;
+            width: 100%;
           }
 
           .hero-subtitle {

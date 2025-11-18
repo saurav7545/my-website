@@ -15,6 +15,7 @@ import ScrollToTop from './components/ScrollToTop';
 import ParticleBackground from './components/ParticleBackground';
 import ScrollProgress from './components/ScrollProgress';
 import LoadingScreen from './components/LoadingScreen';
+import DB from './components/db';
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
               } />
               <Route path="/about-person" element={<AboutPerson />} />
               <Route path="/projects" element={<Projects />} />
+              <Route path="/db" element={<DB />} />
           </Routes>
         </main>
         <Footer />

@@ -16,7 +16,7 @@ import ParticleBackground from './components/ParticleBackground';
 import ScrollProgress from './components/ScrollProgress';
 import LoadingScreen from './components/LoadingScreen';
 import DB from './components/db';
-import BackendTest from './components/BackendTest';
+
 import initScrollOptimizations from './utils/smoothScroll';
 
 
@@ -51,7 +51,7 @@ function App() {
               <Route path="/about-person" element={<AboutPerson />} />
               <Route path="/projects" element={<Projects />} />
               <Route path="/db" element={<DB />} />
-              <Route path="/test-backend" element={<BackendTest />} />
+             
           </Routes>
         </main>
         <Footer />

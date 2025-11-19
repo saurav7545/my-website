@@ -181,6 +181,10 @@ const Navbar = () => {
           display: flex;
           list-style: none;
           gap: 2rem;
+          margin: 0;
+          padding: 0;
+          flex-wrap: nowrap;
+          align-items: center;
         }
 
         .nav-link {
@@ -309,18 +313,19 @@ const Navbar = () => {
         }
 
         /* Tablet Landscape */
-        @media (min-width: 768px) and (max-width: 1199px) {
+        @media (min-width: 769px) and (max-width: 1199px) {
           .nav-container {
             padding: 0 1rem;
           }
 
           .nav-menu {
-            gap: 1.5rem;
+            gap: 1rem;
           }
 
           .nav-link {
-            font-size: 1rem;
-            padding: 0.6rem 0.8rem;
+            font-size: 0.9rem;
+            padding: 0.5rem 0.6rem;
+            white-space: nowrap;
           }
         }
 
@@ -328,6 +333,7 @@ const Navbar = () => {
         @media (max-width: 768px) {
           .hamburger {
             display: block;
+            z-index: 1001;
           }
 
           .nav-menu {
@@ -344,6 +350,8 @@ const Navbar = () => {
             padding-top: 2rem;
             transition: left 0.3s ease;
             border-top: 1px solid rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            z-index: 999;
           }
 
           .nav-menu.active {
@@ -351,11 +359,15 @@ const Navbar = () => {
           }
 
           .nav-item {
-            margin: 1rem 0;
+            margin: 0.75rem 0;
+            width: 100%;
+            text-align: center;
           }
 
           .nav-link {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+            display: block;
+            padding: 0.75rem 1rem;
           }
         }
 

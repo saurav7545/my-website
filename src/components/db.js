@@ -6,6 +6,8 @@ const API_BASE_URL = (
   process.env.REACT_APP_API_URL ?? "https://backend1-2agm.onrender.com/api"
 ).replace(/\/$/, '');
 
+console.log('DB Component - API_BASE_URL:', API_BASE_URL);
+
 const BACKEND_BASE_URL = (() => {
   const fallback = API_BASE_URL.replace(/\/api\/?$/, '');
   if (typeof window === 'undefined') return fallback;
@@ -21,19 +23,11 @@ const TOKEN_KEY = 'sauravEdu:token';
 const USER_KEY = 'sauravEdu:user';
 const TOAST_DURATION = 3500;
 
-// Helper functions
+// Helpers
 const createEmptyFormState = () => ({
-  title: '',
-  category: '',
-  notes: '',
-  file: null,
-  preview: '',
+  title: '', category: '', notes: '', file: null, preview: '',
 });
-
-const createLoginForm = () => ({
-  username: '',
-  password: '',
-});
+const createLoginForm = () => ({ username: '', password: '' });
 
 const fixImageUrl = (imageUrl) => {
   if (!imageUrl) return null;
@@ -49,17 +43,16 @@ const fixImageUrl = (imageUrl) => {
   }
 };
 
+// Hooks
 function useToast() {
   const [toast, setToast] = useState(null);
   const timeoutRef = useRef();
-
   useEffect(() => {
     if (toast) {
       timeoutRef.current = setTimeout(() => setToast(null), TOAST_DURATION);
       return () => clearTimeout(timeoutRef.current);
     }
   }, [toast]);
-
   return { toast, setToast };
 }
 
@@ -67,28 +60,19 @@ function useAuth() {
   const [token, setToken] = useState(() => localStorage.getItem(TOKEN_KEY) || '');
   const [user, setUser] = useState(() => {
     const stored = localStorage.getItem(USER_KEY);
-    try {
-      return stored ? JSON.parse(stored) : null;
-    } catch {
-      return null;
-    }
+    try { return stored ? JSON.parse(stored) : null; } catch { return null; }
   });
-
   useEffect(() => {
     if (token) localStorage.setItem(TOKEN_KEY, token);
     else localStorage.removeItem(TOKEN_KEY);
   }, [token]);
-
   useEffect(() => {
     if (user) localStorage.setItem(USER_KEY, JSON.stringify(user));
     else localStorage.removeItem(USER_KEY);
   }, [user]);
-
   const resetSession = useCallback(() => {
-    setToken('');
-    setUser(null);
+    setToken(''); setUser(null);
   }, []);
-
   return { token, user, setToken, setUser, resetSession, isAuthenticated: Boolean(token) };
 }
 
@@ -97,14 +81,84 @@ function useBackendStatus() {
   return { backendOnline, setBackendOnline };
 }
 
+// API Calls
+async function loginUser({ username, password }) {
+  const res = await fetch(`${API_BASE_URL}/auth/login/`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password }),
+  });
+  if (!res.ok) throw new Error('Login failed');
+  return await res.json();
+}
+
+async function fetchPhotos(token) {
+  console.log('Fetching photos from:', `${API_BASE_URL}/photos/`);
+  console.log('Using token:', token ? `${token.substring(0, 10)}...` : 'NO TOKEN');
+  
+  const res = await fetch(`${API_BASE_URL}/photos/`, {
+    headers: { Authorization: `Token ${token}` },
+  });
+  
+  console.log('Fetch photos response:', res.status, res.statusText);
+  
+  if (!res.ok) {
+    const errorText = await res.text();
+    console.error('Failed to fetch photos:', res.status, errorText);
+    throw new Error(`Unable to load photos: ${res.status} ${res.statusText}`);
+  }
+  
+  const data = await res.json();
+  console.log('Photos loaded:', data.length, 'photos');
+  return data;
+}
+
+async function uploadPhoto(token, form) {
+  const formData = new FormData();
+  formData.append('image', form.file);
+  formData.append('title', form.title);
+  formData.append('category', form.category);
+  formData.append('notes', form.notes);
+  
+  console.log('Uploading photo:', {
+    title: form.title,
+    category: form.category,
+    fileName: form.file.name,
+    fileSize: form.file.size,
+    url: `${API_BASE_URL}/photos/`
+  });
+  
+  const res = await fetch(`${API_BASE_URL}/photos/`, {
+    method: 'POST',
+    headers: { Authorization: `Token ${token}` },
+    body: formData,
+  });
+  
+  if (!res.ok) {
+    const errorText = await res.text();
+    console.error('Upload failed:', res.status, errorText);
+    throw new Error(`Upload failed: ${res.status} ${res.statusText}`);
+  }
+  
+  return await res.json();
+}
+
+async function deletePhoto(token, photoId) {
+  const res = await fetch(`${API_BASE_URL}/photos/${photoId}/`, {
+    method: 'DELETE',
+    headers: { Authorization: `Token ${token}` },
+  });
+  if (!res.ok) throw new Error('Delete failed');
+  return true;
+}
+
+// UI Components
 function AuthForm({ onLogin, authLoading, backendOnline }) {
   const [loginForm, setLoginForm] = useState(createLoginForm());
-
   const handleSubmit = (e) => {
     e.preventDefault();
     onLogin(loginForm);
   };
-
   return (
     <div className="auth-shell">
       <div className="auth-card">
@@ -114,23 +168,13 @@ function AuthForm({ onLogin, authLoading, backendOnline }) {
         <form onSubmit={handleSubmit}>
           <label className="field">
             <span>Username</span>
-            <input
-              type="text"
-              value={loginForm.username}
-              onChange={(e) => setLoginForm((current) => ({ ...current, username: e.target.value }))}
-              placeholder="admin"
-              autoComplete="username"
-            />
+            <input type="text" value={loginForm.username}
+              onChange={(e) => setLoginForm((f) => ({ ...f, username: e.target.value }))} />
           </label>
           <label className="field">
             <span>Password</span>
-            <input
-              type="password"
-              value={loginForm.password}
-              onChange={(e) => setLoginForm((current) => ({ ...current, password: e.target.value }))}
-              placeholder="••••••••"
-              autoComplete="current-password"
-            />
+            <input type="password" value={loginForm.password}
+              onChange={(e) => setLoginForm((f) => ({ ...f, password: e.target.value }))} />
           </label>
           <button type="submit" disabled={authLoading}>
             {authLoading ? 'Verifying…' : 'Sign in'}
@@ -146,127 +190,99 @@ function AuthForm({ onLogin, authLoading, backendOnline }) {
   );
 }
 
-function PhotoUploadForm({ onSubmit, formDisabled, backendOnline }) {
+function PhotoUploadForm({ onSubmit, formDisabled, backendOnline, onUploadComplete }) {
   const [form, setForm] = useState(createEmptyFormState());
-
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
     if (file.size > 5 * 1024 * 1024) {
-      alert('Please choose a file smaller than 5 MB.');
-      e.target.value = '';
-      return;
+      alert('File too large'); e.target.value = ''; return;
     }
     const reader = new FileReader();
-    reader.onload = () => {
-      setForm((current) => ({ ...current, file, preview: reader.result }));
-    };
+    reader.onload = () => setForm((f) => ({ ...f, file, preview: reader.result }));
     reader.readAsDataURL(file);
   };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(form);
-    setForm(createEmptyFormState());
-    document.getElementById('photo-upload-input').value = '';
+    const success = await onSubmit(form);
+    // Only reset form if upload was successful
+    if (success) {
+      setForm(createEmptyFormState());
+      const fileInput = document.getElementById('photo-upload-input');
+      if (fileInput) fileInput.value = '';
+    }
   };
-
   return (
     <form className={`upload-card ${formDisabled ? 'disabled' : ''}`} onSubmit={handleSubmit}>
-      <div className="section-header">
-        <div>
-          <h2>Upload new photo</h2>
-          <p>Accepted formats: JPG, PNG, WebP up to 5 MB.</p>
-        </div>
-      </div>
-      <label className="field">
-        <span>Title</span>
-        <input
-          type="text"
-          disabled={formDisabled}
-          value={form.title}
-          onChange={(e) => setForm((current) => ({ ...current, title: e.target.value }))}
-          placeholder="Eg. NEET Toppers Ceremony"
-        />
+      <h2>Upload new photo</h2>
+      <label className="field"><span>Title *</span>
+        <input type="text" value={form.title} disabled={formDisabled} required
+          placeholder="Enter photo title"
+          onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} />
       </label>
-      <label className="field">
-        <span>Category</span>
-        <input
-          type="text"
-          disabled={formDisabled}
-          value={form.category}
-          onChange={(e) => setForm((current) => ({ ...current, category: e.target.value }))}
-          placeholder="Academics, Events, Hostel..."
-        />
+      <label className="field"><span>Category *</span>
+        <input type="text" value={form.category} disabled={formDisabled} required
+          placeholder="e.g., Nature, Portrait, Landscape"
+          onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))} />
       </label>
-      <label className="field">
-        <span>Notes (optional)</span>
-        <textarea
-          rows={3}
-          disabled={formDisabled}
-          value={form.notes}
-          onChange={(e) => setForm((current) => ({ ...current, notes: e.target.value }))}
-          placeholder="Describe where this banner will be used."
-        />
+      <label className="field"><span>Notes</span>
+        <textarea rows={3} value={form.notes} disabled={formDisabled}
+          placeholder="Add optional description or notes"
+          onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))} />
       </label>
-      <label className="field file-field">
-        <span>Upload photo</span>
-        <input
-          id="photo-upload-input"
-          type="file"
-          accept="image/*"
-          disabled={formDisabled}
-          onChange={handleFileChange}
-        />
+      <label className="field file-field"><span>Upload photo *</span>
+        <input id="photo-upload-input" type="file" accept="image/*" disabled={formDisabled} required
+          onChange={handleFileChange} />
       </label>
       {form.preview && (
         <div className="preview">
           <img src={form.preview} alt="Preview" />
-          <div>
-            <p>{form.file?.name}</p>
-            <p className="muted">
-              {(form.file?.size / 1024).toFixed(1)} KB · {form.file?.type}
-            </p>
-          </div>
+          <p>{form.file?.name}</p>
         </div>
       )}
-      <button type="submit" disabled={formDisabled}>
+      <button type="submit" disabled={formDisabled || !form.file || !form.title || !form.category || !backendOnline}>
         {formDisabled ? 'Uploading...' : 'Add to gallery'}
       </button>
+      <p className="muted" style={{ fontSize: '0.85rem', marginTop: '0.5rem' }}>* Required fields</p>
       {!backendOnline && (
-        <p className="muted">Uploads are paused until the backend connection is restored.</p>
+        <p className="muted" style={{ color: '#fca5a5', fontWeight: '600' }}>⚠️ Backend offline. Check connection.</p>
       )}
     </form>
   );
 }
 
 function GalleryGrid({ photos, searchTerm, onDelete, backendOnline, loading }) {
-  const filteredPhotos = photos.filter((photo) =>
-    [photo.title, photo.category, photo.notes].some((value) =>
-      value?.toLowerCase().includes(searchTerm.toLowerCase())
+  const filtered = photos.filter((p) =>
+    [p.title, p.category, p.notes].some((v) =>
+      v?.toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
 
-  if (loading) return <div className="loader"><span className="spinner" /> Loading photos...</div>;
-  if (filteredPhotos.length === 0) return (
-    <div className="empty-state">
-      {photos.length === 0 ? (
-        <>
-          <p>No photos in gallery yet.</p>
-          <p className="muted">Upload your first image to get started.</p>
-        </>
-      ) : (
-        <>
-          <p>No photos match your search.</p>
+  if (loading) {
+    return (
+      <div className="gallery-card">
+        <div className="loader">
+          <span className="spinner" />
+          <p>Loading photos...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (filtered.length === 0) {
+    return (
+      <div className="gallery-card">
+        <div className="empty-state">
+          <p>No matching photos found.</p>
           <p className="muted">Try a different search term or clear the search.</p>
-        </>
-      )}
-    </div>
-  );
+        </div>
+      </div>
+    );
+  }
 
   return (
     <ul className="gallery-grid">
-      {filteredPhotos.map((photo) => (
+      {filtered.map((photo) => (
         <li key={photo.id} className="gallery-card-item">
           {photo.image ? (
             <img
@@ -278,7 +294,14 @@ function GalleryGrid({ photos, searchTerm, onDelete, backendOnline, loading }) {
               }}
             />
           ) : (
-            <div style={{ background: '#f0f0f0', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666' }}>
+            <div style={{
+              background: '#f0f0f0',
+              height: '200px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#666'
+            }}>
               No Image Available
             </div>
           )}
@@ -306,234 +329,135 @@ function GalleryGrid({ photos, searchTerm, onDelete, backendOnline, loading }) {
   );
 }
 
+// Main Component
 function DB() {
   const { toast, setToast } = useToast();
   const { token, user, setToken, setUser, resetSession, isAuthenticated } = useAuth();
   const { backendOnline, setBackendOnline } = useBackendStatus();
   const [photos, setPhotos] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [uploading, setUploading] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
-  const [sessionBusy, setSessionBusy] = useState(false);
-  const [loading, setLoading] = useState(Boolean(token));
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const [photosLoading, setPhotosLoading] = useState(false);
 
-  const resolveImageSrc = useCallback((image) => {
-    if (!image) return null;
-    if (typeof image === 'string') return fixImageUrl(image);
-    if (typeof image === 'object') {
-      return (
-        image.secure_url ||
-        image.url ||
-        fixImageUrl(image.path || image.public_id || '')
-      );
-    }
-    return null;
+  // Add body class for styling
+  useEffect(() => {
+    document.body.classList.add('db-admin-theme');
+    return () => {
+      document.body.classList.remove('db-admin-theme');
+    };
   }, []);
 
-  const fetchPhotos = useCallback(async () => {
-    if (!token) {
-      setLoading(false);
-      return;
-    }
-    try {
-      setLoading(true);
-      const response = await fetch(`${API_BASE_URL}/photos/`, {
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      });
-      if (response.status === 401) {
-        resetSession();
-        setToast({ status: 'error', message: 'Session expired. Please log in again.' });
-        return;
-      }
-      if (!response.ok) {
-        throw new Error('Unable to load photos');
-      }
-      const data = await response.json();
-      const photosWithFixedUrls = data.map(photo => ({
-        ...photo,
-        image: resolveImageSrc(photo.image),
-      }));
-      setPhotos(photosWithFixedUrls);
-      setBackendOnline(true);
-    } catch (error) {
-      console.error(error);
-      setBackendOnline(false);
-      setToast({
-        status: 'error',
-        message: 'Backend server is offline. Start Django to manage the gallery.',
-      });
-    } finally {
-      setLoading(false);
-    }
-  }, [token, resetSession, setToast, setBackendOnline, resolveImageSrc]);
-
+  // Load photos on mount
   useEffect(() => {
-    if (token) {
-      fetchPhotos();
-    } else {
-      setBackendOnline(true);
+    if (isAuthenticated) {
+      setPhotosLoading(true);
+      fetchPhotos(token)
+        .then((data) => {
+          const fixedPhotos = data.map((p) => ({
+            ...p,
+            image: fixImageUrl(p.image),
+          }));
+          setPhotos(fixedPhotos);
+          setBackendOnline(true);
+        })
+        .catch((err) => {
+          console.error('Failed to load photos:', err);
+          setToast({ type: 'error', message: 'Failed to load photos' });
+          setBackendOnline(false);
+        })
+        .finally(() => setPhotosLoading(false));
     }
-  }, [fetchPhotos, token]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isAuthenticated, token, setBackendOnline, setToast]);
 
-  const handleLogin = async (loginForm) => {
-    if (!loginForm.username || !loginForm.password) {
-      setToast({ status: 'error', message: 'Enter a username and password.' });
-      return;
-    }
-    try {
+  const handleLogin = useCallback(
+    async (loginForm) => {
       setAuthLoading(true);
-      const response = await fetch(`${API_BASE_URL}/auth/login/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(loginForm),
-      });
-      const payload = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        const message = payload?.detail || 'Invalid credentials. Please try again.';
-        throw new Error(message);
-      }
-      setToken(payload.token);
-      setUser(payload.user);
-      setBackendOnline(true);
-      setToast({ status: 'success', message: 'Welcome back!' });
-    } catch (error) {
-      console.error(error);
-      const isOffline = error.message.includes('fetch') || error.name === 'TypeError';
-      if (isOffline) {
-        setBackendOnline(false);
-        setToast({
-          status: 'error',
-          message: 'Backend unreachable. Start Django and try again.',
-        });
-      } else {
+      try {
+        const data = await loginUser(loginForm);
+        setToken(data.token);
+        setUser({ username: loginForm.username });
         setBackendOnline(true);
-        setToast({ status: 'error', message: error.message });
+        setToast({ type: 'success', message: `Welcome, ${loginForm.username}!` });
+      } catch (err) {
+        console.error('Login error:', err);
+        setToast({ type: 'error', message: 'Login failed. Check credentials.' });
+        setBackendOnline(false);
+      } finally {
+        setAuthLoading(false);
       }
-    } finally {
-      setAuthLoading(false);
-    }
-  };
+    },
+    [setToken, setUser, setBackendOnline, setToast]
+  );
 
-  const handleSubmit = async (form) => {
-    if (!backendOnline) {
-      setToast({
-        status: 'error',
-        message: 'Backend is offline. Start the server to upload.',
-      });
-      return;
-    }
-    if (!form.file) {
-      setToast({ status: 'error', message: 'Please select a photo to upload.' });
-      return;
-    }
-    try {
-      setUploading(true);
-      const payload = new FormData();
-      payload.append('title', form.title.trim() || 'Untitled photo');
-      payload.append('category', form.category.trim());
-      payload.append('notes', form.notes.trim());
-      payload.append('image', form.file);
-      const response = await fetch(`${API_BASE_URL}/photos/`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-        body: payload,
-      });
-      if (response.status === 401) {
-        resetSession();
-        setToast({ status: 'error', message: 'Session expired. Please log in again.' });
-        return;
+  const handleUpload = useCallback(
+    async (form) => {
+      // Validate required fields
+      if (!form.file) {
+        setToast({ type: 'error', message: 'Please select a photo to upload' });
+        return false;
       }
-      if (!response.ok) {
-        throw new Error('Upload failed');
+      if (!form.title || form.title.trim() === '') {
+        setToast({ type: 'error', message: 'Please enter a title' });
+        return false;
       }
-      const newPhoto = await response.json();
-      const photoWithFixedUrl = {
-        ...newPhoto,
-        image: resolveImageSrc(newPhoto.image),
-      };
-      setPhotos((current) => [photoWithFixedUrl, ...current]);
-      setToast({ status: 'success', message: 'Photo uploaded successfully.' });
-    } catch (error) {
-      console.error('Upload error:', error);
-      setToast({
-        status: 'error',
-        message: 'Upload failed. Confirm the backend is running.',
-      });
-      setBackendOnline(false);
-    } finally {
-      setUploading(false);
-    }
-  };
-
-  const handleDelete = async (id) => {
-    if (!backendOnline) return;
-    try {
-      const response = await fetch(`${API_BASE_URL}/photos/${id}/`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      });
-      if (response.status === 401) {
-        resetSession();
-        setToast({ status: 'error', message: 'Session expired. Please log in again.' });
-        return;
+      if (!form.category || form.category.trim() === '') {
+        setToast({ type: 'error', message: 'Please enter a category' });
+        return false;
       }
-      if (!response.ok) {
-        throw new Error('Deletion failed');
+      
+      setUploadLoading(true);
+      try {
+        const newPhoto = await uploadPhoto(token, form);
+        const fixedPhoto = { ...newPhoto, image: fixImageUrl(newPhoto.image) };
+        setPhotos((prev) => [fixedPhoto, ...prev]);
+        setToast({ type: 'success', message: 'Photo uploaded successfully!' });
+        setBackendOnline(true);
+        return true; // Success
+      } catch (err) {
+        console.error('Upload error:', err);
+        const errorMessage = err.message || 'Upload failed. Check your connection and try again.';
+        setToast({ type: 'error', message: errorMessage });
+        setBackendOnline(false);
+        return false; // Failure
+      } finally {
+        setUploadLoading(false);
       }
-      setPhotos((current) => current.filter((photo) => photo.id !== id));
-      setToast({ status: 'info', message: 'Photo removed from gallery.' });
-    } catch (error) {
-      console.error(error);
-      setToast({
-        status: 'error',
-        message: 'Unable to delete. Check the backend connection.',
-      });
-      setBackendOnline(false);
-    }
-  };
+    },
+    [token, setToast, setBackendOnline]
+  );
 
-  const handleLogout = async () => {
-    try {
-      setSessionBusy(true);
-      await fetch(`${API_BASE_URL}/auth/logout/`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setSessionBusy(false);
-      resetSession();
-      setBackendOnline(true);
-      setToast({ status: 'info', message: 'You have been logged out.' });
-    }
-  };
+  const handleDelete = useCallback(
+    async (photoId) => {
+      if (!window.confirm('Are you sure you want to delete this photo?')) return;
+      try {
+        await deletePhoto(token, photoId);
+        setPhotos((prev) => prev.filter((p) => p.id !== photoId));
+        setToast({ type: 'success', message: 'Photo deleted successfully!' });
+      } catch (err) {
+        console.error('Delete error:', err);
+        setToast({ type: 'error', message: 'Delete failed. Try again.' });
+      }
+    },
+    [token, setToast]
+  );
 
-  const formDisabled = uploading || !backendOnline || !isAuthenticated;
-
-  useEffect(() => {
-    if (typeof document !== 'undefined') {
-      document.body.classList.add('db-admin-theme');
-      return () => document.body.classList.remove('db-admin-theme');
-    }
-  }, []);
+  const handleLogout = useCallback(() => {
+    resetSession();
+    setPhotos([]);
+    setToast({ type: 'info', message: 'Logged out successfully' });
+  }, [resetSession, setToast]);
 
   if (!isAuthenticated) {
     return (
       <>
-        <AuthForm onLogin={handleLogin} authLoading={authLoading} backendOnline={backendOnline} />
+        <AuthForm
+          onLogin={handleLogin}
+          authLoading={authLoading}
+          backendOnline={backendOnline}
+        />
         {toast && (
-          <div className={`toast ${toast.status}`}>
+          <div className={`toast ${toast.type}`}>
             <p>{toast.message}</p>
           </div>
         )}
@@ -542,81 +466,44 @@ function DB() {
   }
 
   return (
-    <div className="admin-shell">
-      {!backendOnline && (
-        <div className="status-banner error">
-          <div>
-            <h4>Backend disconnected</h4>
-            <p>
-              Start the Django server (python manage.py runserver) so uploads and deletes can sync to MySQL.
-            </p>
-          </div>
-          <button type="button" onClick={fetchPhotos}>
-            Retry connection
-          </button>
-        </div>
-      )}
-      <header className="admin-header">
+    <div className="db-container">
+      <header className="db-header">
         <div>
-          <p className="eyebrow">SauravEdu Admin</p>
-          <h1>Media Control Center</h1>
-          <p className="subtitle">
-            Upload hero visuals, keep website sections fresh, and manage the gallery that powers the public site.
-          </p>
+          <h1>SauravEdu Media Library</h1>
+          <p className="muted">Logged in as {user?.username}</p>
         </div>
-        <div className="header-meta">
-          <div className="stats-card">
-            <p className="label">Total photos</p>
-            <p className="value">{photos.length}</p>
-            <p className="muted">Auto-sync ready for deployment</p>
-          </div>
-          <div className="session-card">
-            <p className="label">Signed in</p>
-            <p className="value user">{user?.username}</p>
-            <button
-              type="button"
-              className="outline"
-              onClick={handleLogout}
-              disabled={sessionBusy}
-            >
-              {sessionBusy ? 'Signing out…' : 'Logout'}
-            </button>
-          </div>
-        </div>
-      </header>
-      <section className="panel-grid">
-        <PhotoUploadForm onSubmit={handleSubmit} formDisabled={formDisabled} backendOnline={backendOnline} />
-        <div className="gallery-card">
-          <div className="gallery-header">
-            <div>
-              <h2>Gallery manager</h2>
-              <p>Search, review, and delete website-ready assets.</p>
-            </div>
+        <div className="header-actions">
+          <label className="search-field">
             <input
-              className="search"
               type="search"
-              placeholder="Search by title or category"
+              placeholder="Search photos..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-          </div>
-          {loading ? (
-            <div className="loader">
-              <span className="spinner" />
-              <p>Loading photos...</p>
-            </div>
-          ) : (
-            <GalleryGrid
-              photos={photos}
-              searchTerm={searchTerm}
-              onDelete={handleDelete}
-              backendOnline={backendOnline}
-            />
-          )}
+          </label>
+          <button type="button" onClick={handleLogout} className="ghost">
+            Log out
+          </button>
         </div>
-      </section>
+      </header>
+
+      <div className="db-content">
+        <PhotoUploadForm
+          onSubmit={handleUpload}
+          formDisabled={uploadLoading || !backendOnline}
+          backendOnline={backendOnline}
+        />
+        <GalleryGrid
+          photos={photos}
+          searchTerm={searchTerm}
+          onDelete={handleDelete}
+          backendOnline={backendOnline}
+          loading={photosLoading}
+        />
+      </div>
+
       {toast && (
-        <div className={`toast ${toast.status}`}>
+        <div className={`toast ${toast.type}`}>
           <p>{toast.message}</p>
         </div>
       )}

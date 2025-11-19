@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -16,9 +16,16 @@ import ParticleBackground from './components/ParticleBackground';
 import ScrollProgress from './components/ScrollProgress';
 import LoadingScreen from './components/LoadingScreen';
 import DB from './components/db';
+import BackendTest from './components/BackendTest';
+import initScrollOptimizations from './utils/smoothScroll';
 
 
 function App() {
+  // Initialize smooth scroll optimizations
+  useEffect(() => {
+    initScrollOptimizations();
+  }, []);
+
   return (
     <Router>
       <div className="App">
@@ -44,6 +51,7 @@ function App() {
               <Route path="/about-person" element={<AboutPerson />} />
               <Route path="/projects" element={<Projects />} />
               <Route path="/db" element={<DB />} />
+              <Route path="/test-backend" element={<BackendTest />} />
           </Routes>
         </main>
         <Footer />

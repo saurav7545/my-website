@@ -17,11 +17,19 @@ import ScrollProgress from './components/ScrollProgress';
 import LoadingScreen from './components/LoadingScreen';
 import DB from './components/db';
 
-import initScrollOptimizations from './utils/smoothScroll';
-
+// Simple smooth scroll function
+const initScrollOptimizations = () => {
+  // Add smooth scrolling behavior
+  const style = document.createElement('style');
+  style.textContent = `
+    html {
+      scroll-behavior: smooth;
+    }
+  `;
+  document.head.appendChild(style);
+};
 
 function App() {
-  // Initialize smooth scroll optimizations
   useEffect(() => {
     initScrollOptimizations();
   }, []);
@@ -38,7 +46,6 @@ function App() {
           <Routes>
             <Route path="/" element={
               <>
-               
                 <Hero />
                 <About />
                 <Gallery />
@@ -47,11 +54,10 @@ function App() {
                 <Education />
                 <Contact />
               </>
-              } />
-              <Route path="/about-person" element={<AboutPerson />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/db" element={<DB />} />
-             
+            } />
+            <Route path="/about-person" element={<AboutPerson />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/db" element={<DB />} />
           </Routes>
         </main>
         <Footer />

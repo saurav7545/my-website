@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, useRef } from 'react';
 import './db.css';
 
 // Constants - Remove /api from base URL since it's already in endpoints
-const API_BASE_URL = (import.meta.env.VITE_API_URL ?? "https://backend1-2agm.onrender.com").replace(/\/$/, "");
+const API_BASE_URL = (process.env.REACT_APP_API_URL ?? "https://backend1-2agm.onrender.com").replace(/\/$/, "");
 const TOKEN_KEY = 'sauravEdu:token';
 const USER_KEY = 'sauravEdu:user';
 const TOAST_DURATION = 3500;

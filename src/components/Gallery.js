@@ -5,7 +5,7 @@ import ImageSlider from './ImageSlider';
 
 // API Configuration
 const API_BASE_URL = (
-  process.env.REACT_APP_API_URL ?? 'https://backend1-2agm.onrender.com/api'
+  process.env.REACT_APP_API_URL ?? 'https://backend1-2agm.onrender.com'
 ).replace(/\/$/, '');
 
 const BACKEND_BASE_URL = (() => {

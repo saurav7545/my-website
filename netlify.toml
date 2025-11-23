@@ -1,13 +1,30 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
 [[redirects]]
   from = "/api/*"
   to = "https://backend1-2agm.onrender.com/api/:splat"
   status = 200
   force = true
-  conditions = {Role = ["admin"]}
 
-[[headers]]
-  for = "/api/*"
-  [headers.values]
-    Access-Control-Allow-Origin = "*"
-    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
-    Access-Control-Allow-Headers = "Content-Type, Authorization"
+# Specific routes for SPA
+[[redirects]]
+  from = "/db"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/about-person"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/projects"
+  to = "/index.html"
+  status = 200

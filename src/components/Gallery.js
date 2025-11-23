@@ -39,16 +39,6 @@ const resolveImageSrc = (image) => {
   return url ? `${url}?t=${Date.now()}` : null; // Cache busting
 };
 
-const TOKEN_KEY = 'sauravEdu:token';
-const getStoredToken = () => {
-  if (typeof window === 'undefined') return '';
-  try {
-    return localStorage.getItem(TOKEN_KEY) || '';
-  } catch {
-    return '';
-  }
-};
-
 const Gallery = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, threshold: 0.3 });
@@ -61,31 +51,52 @@ const Gallery = () => {
     const fetchPhotos = async () => {
       try {
         setLoading(true);
-        const token = getStoredToken();
-        const response = await fetch(`${API_BASE_URL}/photos/`, {
-          headers: token ? { Authorization: `Token ${token}` } : undefined,
-        });
-        if (response.status === 401) {
-          throw new Error('Gallery endpoint requires authentication. Log in from /db to sync photos.');
-        }
-        if (!response.ok) {
-          throw new Error('Unable to load gallery photos right now.');
-        }
-        const data = await response.json();
-        if (!isMounted) return;
-        const normalized = data.map((photo) => ({
-          ...photo,
-          image: resolveImageSrc(photo.image),
-        }));
-        setPhotos(normalized);
         setError('');
+        
+        // Try to fetch from public endpoint first
+        const response = await fetch(`${API_BASE_URL}/api/gallery/photos/public/`);
+        
+        if (response.status === 404) {
+          // If public endpoint doesn't exist, try authenticated endpoint with token
+          const token = localStorage.getItem('sauravEdu:token');
+          const authResponse = await fetch(`${API_BASE_URL}/api/gallery/photos/`, {
+            headers: token ? { Authorization: `Token ${token}` } : {}
+          });
+          
+          if (!authResponse.ok) {
+            if (authResponse.status === 401 || authResponse.status === 403) {
+              throw new Error('Gallery photos are currently private. Please check back later.');
+            }
+            throw new Error('Unable to load gallery photos at the moment.');
+          }
+          
+          const data = await authResponse.json();
+          if (!isMounted) return;
+          const normalized = data.map((photo) => ({
+            ...photo,
+            image: resolveImageSrc(photo.image),
+          }));
+          setPhotos(normalized);
+        } else if (response.ok) {
+          const data = await response.json();
+          if (!isMounted) return;
+          const normalized = data.map((photo) => ({
+            ...photo,
+            image: resolveImageSrc(photo.image),
+          }));
+          setPhotos(normalized);
+        } else {
+          throw new Error('Unable to load gallery photos.');
+        }
       } catch (fetchError) {
         if (!isMounted) return;
+        console.error('Gallery fetch error:', fetchError);
         setError(fetchError.message || 'Something went wrong while loading photos.');
       } finally {
         if (isMounted) setLoading(false);
       }
     };
+    
     fetchPhotos();
     return () => {
       isMounted = false;
@@ -169,7 +180,7 @@ const Gallery = () => {
                 <FaCamera />
                 <div>
                   <h3>No photos yet</h3>
-                  <p>Uploads from the admin panel will appear here automatically.</p>
+                  <p>Check back later for new uploads!</p>
                 </div>
               </div>
             )}
@@ -202,6 +213,11 @@ const Gallery = () => {
                       {photo.category && <p className="pill">{photo.category}</p>}
                       <h3>{photo.title || 'Untitled photo'}</h3>
                       {photo.notes && <p className="muted">{photo.notes}</p>}
+                      {photo.created_at && (
+                        <p className="date muted">
+                          {new Date(photo.created_at).toLocaleDateString()}
+                        </p>
+                      )}
                     </div>
                   </motion.li>
                 ))}
@@ -281,7 +297,7 @@ const Gallery = () => {
           margin: 0;
           padding: 0;
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
           gap: 1.5rem;
         }
         .public-gallery-card {
@@ -293,6 +309,9 @@ const Gallery = () => {
           display: flex;
           flex-direction: column;
           transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .public-gallery-card:hover {
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
         .public-gallery-card img,
         .public-gallery-card .placeholder {
@@ -335,6 +354,10 @@ const Gallery = () => {
           margin: 0;
           font-size: 0.95rem;
         }
+        .date {
+          font-size: 0.85rem;
+          opacity: 0.7;
+        }
         .spinner {
           width: 38px;
           height: 38px;
@@ -342,6 +365,9 @@ const Gallery = () => {
           border: 4px solid rgba(37, 99, 235, 0.2);
           border-top-color: #2563eb;
           animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+          to { transform: rotate(360deg); }
         }
         @media (max-width: 768px) {
           .section-header {

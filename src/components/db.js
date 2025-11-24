@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useState, useRef } from 'react';
 import './db.css';
 
-// Constants - Remove /api from base URL since it's already in endpoints
+// ========================
+// Constants
+// ========================
+// Remove extra /api from base URL, since Django endpoints already include /api
 const API_BASE_URL = (process.env.REACT_APP_API_URL ?? "https://backend1-2agm.onrender.com").replace(/\/$/, "");
 const TOKEN_KEY = 'sauravEdu:token';
 const USER_KEY = 'sauravEdu:user';
@@ -9,7 +12,9 @@ const TOAST_DURATION = 3500;
 
 console.log('API Base URL:', API_BASE_URL); // Debug
 
+// ========================
 // Helpers
+// ========================
 const createEmptyFormState = () => ({ title: '', category: '', notes: '', file: null, preview: '' });
 const createLoginForm = () => ({ username: '', password: '' });
 
@@ -20,7 +25,9 @@ const getImageUrl = (imageData) => {
   return null;
 };
 
+// ========================
 // Toast Hook
+// ========================
 function useToast() {
   const [toast, setToast] = useState(null);
   const timeoutRef = useRef();
@@ -33,7 +40,9 @@ function useToast() {
   return { toast, setToast };
 }
 
+// ========================
 // Auth Hook
+// ========================
 function useAuth() {
   const [token, setToken] = useState(() => localStorage.getItem(TOKEN_KEY) || '');
   const [user, setUser] = useState(() => {
@@ -49,7 +58,9 @@ function useAuth() {
   return { token, user, setToken, setUser, resetSession, isAuthenticated: Boolean(token) };
 }
 
-// API Calls - CORRECT ENDPOINTS based on your Django URLs
+// ========================
+// API Calls
+// ========================
 async function loginUser({ username, password }) {
   const res = await fetch(`${API_BASE_URL}/api/gallery/auth/login/`, {
     method: 'POST',
@@ -58,18 +69,10 @@ async function loginUser({ username, password }) {
   });
 
   if (!res.ok) {
-    // Better error handling for HTML responses
     const contentType = res.headers.get('content-type');
-    if (contentType && contentType.includes('text/html')) {
-      throw new Error('Server returned HTML page. Check if API endpoint is correct.');
-    }
-    
-    try {
-      const errorData = await res.json();
-      throw new Error(errorData.detail || errorData.message || 'Login failed');
-    } catch (parseError) {
-      throw new Error(`Login failed: ${res.status} ${res.statusText}`);
-    }
+    if (contentType && contentType.includes('text/html')) throw new Error('Server returned HTML. Check API URL.');
+    try { const errorData = await res.json(); throw new Error(errorData.detail || errorData.message || 'Login failed'); }
+    catch { throw new Error(`Login failed: ${res.status} ${res.statusText}`); }
   }
 
   return await res.json();
@@ -83,12 +86,8 @@ async function fetchPhotos(token) {
   if (!res.ok) {
     if (res.status === 401) throw new Error('Authentication required. Please login again.');
     if (res.status === 404) throw new Error('Photos endpoint not found. Check URL.');
-    
     const contentType = res.headers.get('content-type');
-    if (contentType && contentType.includes('text/html')) {
-      throw new Error('Server returned HTML instead of JSON. Check API endpoint.');
-    }
-    
+    if (contentType && contentType.includes('text/html')) throw new Error('Server returned HTML. Check API endpoint.');
     throw new Error(`Failed to load photos: ${res.status}`);
   }
   
@@ -113,18 +112,11 @@ async function uploadPhoto(token, form) {
 
   if (!res.ok) {
     const contentType = res.headers.get('content-type');
-    if (contentType && contentType.includes('text/html')) {
-      throw new Error('Upload endpoint returned HTML. Check if endpoint exists.');
-    }
+    if (contentType && contentType.includes('text/html')) throw new Error('Upload endpoint returned HTML. Check endpoint.');
     
     let errorMessage = `Upload failed: ${res.status}`;
-    try { 
-      const errorData = await res.json(); 
-      errorMessage = errorData.detail || errorData.message || JSON.stringify(errorData); 
-    } 
-    catch { 
-      errorMessage = await res.text(); 
-    }
+    try { const errorData = await res.json(); errorMessage = errorData.detail || errorData.message || JSON.stringify(errorData); }
+    catch { errorMessage = await res.text(); }
     throw new Error(errorMessage);
   }
 
@@ -144,14 +136,14 @@ async function deletePhoto(token, photoId) {
   return true;
 }
 
-// Components (SAME AS BEFORE)
+// ========================
+// Components
+// ========================
+
 function AuthForm({ onLogin, authLoading }) {
   const [loginForm, setLoginForm] = useState(createLoginForm());
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onLogin(loginForm);
-  };
+  const handleSubmit = (e) => { e.preventDefault(); onLogin(loginForm); };
 
   return (
     <div className="auth-shell">
@@ -238,6 +230,9 @@ function GalleryGrid({ photos, onDelete, loading }) {
   );
 }
 
+// ========================
+// Main DB Component
+// ========================
 function DB() {
   const { toast, setToast } = useToast();
   const { token, user, setToken, setUser, resetSession, isAuthenticated } = useAuth();

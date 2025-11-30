@@ -1,11 +1,13 @@
-import React, { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { FaCalculator, FaTasks, FaLaptopCode, FaExternalLinkAlt, FaGithub ,FaYoutube} from 'react-icons/fa';
+import React, { useRef, useState, useMemo } from 'react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { FaCalculator, FaTasks, FaLaptopCode, FaExternalLinkAlt, FaGithub, FaYoutube, FaSearch, FaFilter } from 'react-icons/fa';
 import ImageSlider from './ImageSlider';
 
 const Projects = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, threshold: 0.3 });
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('all');
 
   const projectImages = [
     '/images/logo1.svg',
@@ -24,7 +26,8 @@ const Projects = () => {
       technologies: ['JavaScript', 'CSS3', 'HTML5', 'Math.js'],
       demoLink: 'https://calsk.netlify.app/',
       githubLink: 'https://github.com/saurav7545/calculator.git',
-      status: 'live'
+      status: 'live',
+      category: 'web'
     },
     {
       id: 2,
@@ -34,7 +37,8 @@ const Projects = () => {
       technologies: ['HTML', 'CSS', 'JavaScript', 'React.js'],
       demoLink: 'https://indiantodolist.netlify.app/login/login.html',
       githubLink: 'https://github.com/saurav7545/todolist.git',
-      status: 'live'
+      status: 'live',
+      category: 'web'
     },
     {
       id: 3,
@@ -44,9 +48,9 @@ const Projects = () => {
       technologies: ['python', 'python library'],
       demoLink: '#',
       githubLink: 'https://github.com/saurav7545/youtube_audio_download',
-      status: 'github'
+      status: 'github',
+      category: 'python'
     },
-    
     {
       id: 4,
       icon: <FaLaptopCode />,
@@ -55,9 +59,29 @@ const Projects = () => {
       technologies: ['React.js', 'CSS3', 'MySQL Database', 'Framer Motion','Django'],
       demoLink: '#',
       githubLink: 'https://github.com/saurav7545/SmartBus.git',
-      status: 'github'
+      status: 'github',
+      category: 'fullstack'
     }
   ];
+
+  const filterOptions = [
+    { value: 'all', label: 'All Projects' },
+    { value: 'web', label: 'Web Development' },
+    { value: 'python', label: 'Python' },
+    { value: 'fullstack', label: 'Full Stack' }
+  ];
+
+  const filteredProjects = useMemo(() => {
+    return projects.filter(project => {
+      const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           project.technologies.some(tech => tech.toLowerCase().includes(searchQuery.toLowerCase()));
+      
+      const matchesFilter = selectedFilter === 'all' || project.category === selectedFilter;
+      
+      return matchesSearch && matchesFilter;
+    });
+  }, [searchQuery, selectedFilter]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -118,10 +142,47 @@ const Projects = () => {
             <p className="section-subtitle">
               Explore some of my latest work and technical achievements
             </p>
+            
+            <div className="projects-controls">
+              <div className="search-box">
+                <FaSearch className="search-icon" />
+                <input
+                  type="text"
+                  placeholder="Search projects..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="search-input"
+                />
+              </div>
+              
+              <div className="filter-buttons">
+                <FaFilter className="filter-icon" />
+                {filterOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    className={`filter-btn ${selectedFilter === option.value ? 'active' : ''}`}
+                    onClick={() => setSelectedFilter(option.value)}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            
+            {filteredProjects.length === 0 && (
+              <motion.div
+                className="no-results"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <p>No projects found matching your search.</p>
+              </motion.div>
+            )}
           </motion.div>
 
-          <motion.div className="projects-grid" variants={containerVariants}>
-            {projects.map((project) => (
+          <AnimatePresence mode="wait">
+            <motion.div className="projects-grid" variants={containerVariants}>
+              {filteredProjects.map((project) => (
               <motion.div
                 key={project.id}
                 className="project-card"
@@ -192,8 +253,9 @@ const Projects = () => {
                   )}
                 </div>
               </motion.div>
-            ))}
-          </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
 
           <motion.div className="view-all-projects" variants={itemVariants}>
             <motion.a
@@ -232,6 +294,107 @@ const Projects = () => {
           margin-bottom: 4rem;
         }
 
+        .projects-controls {
+          margin-top: 2rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+          align-items: center;
+        }
+
+        .search-box {
+          position: relative;
+          width: 100%;
+          max-width: 500px;
+        }
+
+        .search-icon {
+          position: absolute;
+          left: 1rem;
+          top: 50%;
+          transform: translateY(-50%);
+          color: var(--neon-green);
+          font-size: 1.2rem;
+          z-index: 1;
+        }
+
+        .search-input {
+          width: 100%;
+          padding: 1rem 1rem 1rem 3rem;
+          background: rgba(0, 0, 0, 0.5);
+          border: 2px solid var(--neon-green);
+          border-radius: 25px;
+          color: var(--neon-green);
+          font-size: 1rem;
+          font-family: 'Courier New', monospace;
+          outline: none;
+          transition: all 0.3s ease;
+          box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+
+        .search-input:focus {
+          border-color: var(--neon-cyan);
+          box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+          background: rgba(0, 0, 0, 0.7);
+        }
+
+        .search-input::placeholder {
+          color: rgba(0, 255, 65, 0.5);
+        }
+
+        .filter-buttons {
+          display: flex;
+          gap: 1rem;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .filter-icon {
+          color: var(--neon-cyan);
+          font-size: 1.2rem;
+          margin-right: 0.5rem;
+        }
+
+        .filter-btn {
+          padding: 0.75rem 1.5rem;
+          background: rgba(0, 0, 0, 0.5);
+          border: 2px solid rgba(0, 255, 65, 0.3);
+          border-radius: 25px;
+          color: var(--neon-green);
+          font-family: 'Courier New', monospace;
+          font-weight: 600;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+
+        .filter-btn:hover {
+          border-color: var(--neon-cyan);
+          color: var(--neon-cyan);
+          box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+          transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+          background: linear-gradient(135deg, #00ff41, #00ffff);
+          border-color: var(--neon-cyan);
+          color: #000;
+          box-shadow: 0 0 20px rgba(0, 255, 65, 0.6);
+          font-weight: 700;
+        }
+
+        .no-results {
+          text-align: center;
+          padding: 3rem;
+          color: var(--neon-cyan);
+          font-family: 'Courier New', monospace;
+          font-size: 1.2rem;
+          text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+        }
+
         .projects-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -240,14 +403,24 @@ const Projects = () => {
         }
 
         .project-card {
-          background: var(--bg-white);
+          background: rgba(0, 0, 0, 0.5);
           border-radius: 20px;
           padding: 2rem;
           box-shadow: var(--shadow);
-          border: 1px solid rgba(0, 0, 0, 0.05);
+          border: 2px solid var(--neon-green);
           transition: all 0.3s ease;
           position: relative;
           overflow: hidden;
+          box-shadow: 
+            0 0 20px rgba(0, 255, 65, 0.3),
+            inset 0 0 20px rgba(0, 255, 65, 0.1);
+        }
+
+        .project-card:hover {
+          border-color: var(--neon-cyan);
+          box-shadow: 
+            0 0 30px rgba(0, 255, 255, 0.5),
+            inset 0 0 30px rgba(0, 255, 255, 0.15);
         }
 
         .project-card::before {
@@ -310,14 +483,18 @@ const Projects = () => {
         .project-title {
           font-size: 1.5rem;
           font-weight: 700;
-          color: var(--text-dark);
+          color: var(--neon-green);
           margin-bottom: 1rem;
+          text-shadow: 0 0 10px rgba(0, 255, 65, 0.6);
+          font-family: 'Courier New', monospace;
         }
 
         .project-description {
-          color: var(--text-light);
+          color: var(--neon-cyan);
           line-height: 1.6;
           margin-bottom: 1.5rem;
+          text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+          font-family: 'Courier New', monospace;
         }
 
         .project-technologies {
@@ -328,12 +505,15 @@ const Projects = () => {
         }
 
         .tech-tag {
-          background: var(--gradient-primary);
-          color: white;
+          background: linear-gradient(135deg, rgba(0, 255, 65, 0.2), rgba(0, 255, 255, 0.2));
+          color: var(--neon-green);
           padding: 0.4rem 0.8rem;
           border-radius: 15px;
           font-size: 0.8rem;
           font-weight: 500;
+          border: 1px solid rgba(0, 255, 65, 0.3);
+          font-family: 'Courier New', monospace;
+          text-shadow: 0 0 5px rgba(0, 255, 65, 0.6);
         }
 
         .project-links {

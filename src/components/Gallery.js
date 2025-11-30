@@ -280,7 +280,9 @@ const Gallery = () => {
         }
         .gallery-status h3 {
           margin: 0 0 0.35rem;
-          color: var(--text-dark);
+          color: var(--neon-green);
+          text-shadow: 0 0 10px rgba(0, 255, 65, 0.6);
+          font-family: 'Courier New', monospace;
         }
         .gallery-status.error {
           background: rgba(239, 68, 68, 0.12);
@@ -336,7 +338,9 @@ const Gallery = () => {
         .card-info h3 {
           margin: 0;
           font-size: 1.1rem;
-          color: var(--text-dark);
+          color: var(--neon-cyan);
+          text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+          font-family: 'Courier New', monospace;
         }
         .pill {
           align-self: flex-start;

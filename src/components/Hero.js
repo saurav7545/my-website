@@ -197,32 +197,58 @@ const Hero = () => {
           justify-content: center;
           position: relative;
           overflow: hidden;
-          background: radial-gradient(circle at top, rgba(99, 102, 241, 0.4), transparent 45%),
-            linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e1b4b 100%);
-          background-attachment: fixed;
+          background: #000000;
+          background-image: 
+            linear-gradient(rgba(0, 255, 65, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 255, 65, 0.05) 1px, transparent 1px),
+            radial-gradient(circle at 20% 30%, rgba(0, 255, 65, 0.1), transparent 50%),
+            radial-gradient(circle at 80% 70%, rgba(0, 255, 255, 0.1), transparent 50%),
+            radial-gradient(circle at 50% 50%, rgba(176, 38, 255, 0.1), transparent 50%);
+          background-size: 100px 100px, 100px 100px, 800px 800px, 800px 800px, 600px 600px;
+          background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
+          animation: matrixMove 15s linear infinite, pulseGlow 4s ease-in-out infinite;
+          padding-top: 70px;
+        }
+
+        @keyframes matrixMove {
+          0% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+          100% { background-position: 100px 100px, 100px 100px, 200px 200px, -200px -200px, 100px -100px; }
+        }
+
+        @keyframes pulseGlow {
+          0%, 100% { box-shadow: 0 0 100px rgba(0, 255, 65, 0.3), inset 0 0 100px rgba(0, 255, 65, 0.1); }
+          50% { box-shadow: 0 0 150px rgba(0, 255, 255, 0.4), inset 0 0 150px rgba(0, 255, 255, 0.15); }
         }
 
         .hero-section::before,
         .hero-section::after {
           content: "";
           position: absolute;
-          width: 340px;
-          height: 340px;
+          width: 500px;
+          height: 500px;
           border-radius: 50%;
-          filter: blur(120px);
-          opacity: 0.55;
+          filter: blur(150px);
+          opacity: 0.4;
+          animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(50px, -50px) scale(1.1); }
         }
 
         .hero-section::before {
           top: 5%;
           left: 10%;
-          background: rgba(248, 113, 113, 0.4);
+          background: rgba(0, 255, 65, 0.3);
+          animation-delay: 0s;
         }
 
         .hero-section::after {
           bottom: 5%;
           right: 10%;
-          background: rgba(59, 130, 246, 0.35);
+          background: rgba(0, 255, 255, 0.3);
+          animation-delay: 3s;
         }
 
         .hero-background {
@@ -277,16 +303,37 @@ const Hero = () => {
 
         .hero-content {
           text-align: center;
-          color: white;
+          color: var(--neon-green);
           z-index: 2;
           position: relative;
           max-width: 920px;
           padding: 3rem 1.5rem;
           border-radius: 32px;
           backdrop-filter: blur(18px);
-          background: rgba(15, 23, 42, 0.55);
-          border: 1px solid rgba(148, 163, 184, 0.2);
-          box-shadow: 0 25px 80px rgba(2, 6, 23, 0.6);
+          background: rgba(0, 0, 0, 0.7);
+          border: 2px solid var(--neon-green);
+          box-shadow: 
+            0 0 30px rgba(0, 255, 65, 0.5),
+            0 0 60px rgba(0, 255, 65, 0.3),
+            inset 0 0 30px rgba(0, 255, 65, 0.1);
+          animation: borderPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes borderPulse {
+          0%, 100% { 
+            border-color: var(--neon-green);
+            box-shadow: 
+              0 0 30px rgba(0, 255, 65, 0.5),
+              0 0 60px rgba(0, 255, 65, 0.3),
+              inset 0 0 30px rgba(0, 255, 65, 0.1);
+          }
+          50% { 
+            border-color: var(--neon-cyan);
+            box-shadow: 
+              0 0 40px rgba(0, 255, 255, 0.6),
+              0 0 80px rgba(0, 255, 255, 0.4),
+              inset 0 0 40px rgba(0, 255, 255, 0.15);
+          }
         }
 
         .hero-text {
@@ -301,12 +348,15 @@ const Hero = () => {
           font-size: 4rem;
           font-weight: 800;
           margin-bottom: 1rem;
-          color: #ffffff !important;
-          background: linear-gradient(45deg, #ffffff, #e0e7ff, #ffffff);
+          background: linear-gradient(45deg, #00ff41, #00ffff, #b026ff, #ff00ff, #ffff00);
+          background-size: 200% 200%;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-          text-shadow: 0 2px 10px rgba(255, 255, 255, 0.5), 0 4px 20px rgba(0, 0, 0, 0.3);
+          text-shadow: 
+            0 0 20px rgba(0, 255, 65, 0.8),
+            0 0 40px rgba(0, 255, 65, 0.6),
+            0 0 60px rgba(0, 255, 65, 0.4);
           line-height: 1.2;
           word-wrap: break-word;
           white-space: normal;
@@ -314,6 +364,30 @@ const Hero = () => {
           width: 100%;
           opacity: 1 !important;
           visibility: visible !important;
+          animation: gradientShift 3s ease infinite, textGlow 2s ease-in-out infinite alternate;
+          font-family: 'Courier New', monospace;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+        }
+
+        @keyframes gradientShift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+
+        @keyframes textGlow {
+          0% { 
+            text-shadow: 
+              0 0 20px rgba(0, 255, 65, 0.8),
+              0 0 40px rgba(0, 255, 65, 0.6);
+          }
+          100% { 
+            text-shadow: 
+              0 0 30px rgba(0, 255, 255, 1),
+              0 0 60px rgba(0, 255, 255, 0.8),
+              0 0 90px rgba(176, 38, 255, 0.6);
+          }
         }
 
         @supports not (-webkit-background-clip: text) {
@@ -329,16 +403,23 @@ const Hero = () => {
           margin-bottom: 2rem;
           opacity: 0.95;
           min-height: 2rem;
+          color: var(--neon-cyan);
+          text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+          font-family: 'Courier New', monospace;
+          letter-spacing: 2px;
         }
 
         .hero-description {
           font-size: 1.2rem;
           line-height: 1.75;
           margin-bottom: 2rem;
-          opacity: 0.85;
+          opacity: 0.9;
           max-width: 620px;
           margin-left: auto;
           margin-right: auto;
+          color: rgba(0, 255, 65, 0.9);
+          text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+          font-family: 'Courier New', monospace;
         }
 
         .hero-highlight-grid {
@@ -350,24 +431,40 @@ const Hero = () => {
 
         .highlight-card {
           text-align: left;
-          background: rgba(15, 23, 42, 0.8);
-          border: 1px solid rgba(99, 102, 241, 0.3);
+          background: rgba(0, 0, 0, 0.6);
+          border: 2px solid var(--neon-green);
           border-radius: 1.2rem;
           padding: 1rem 1.2rem;
+          box-shadow: 
+            0 0 15px rgba(0, 255, 65, 0.4),
+            inset 0 0 15px rgba(0, 255, 65, 0.1);
+          transition: all 0.3s ease;
+        }
+
+        .highlight-card:hover {
+          border-color: var(--neon-cyan);
+          box-shadow: 
+            0 0 25px rgba(0, 255, 255, 0.6),
+            inset 0 0 25px rgba(0, 255, 255, 0.15);
+          transform: translateY(-5px);
         }
 
         .badge-label {
           text-transform: uppercase;
           letter-spacing: 0.2em;
           font-size: 0.65rem;
-          color: #a5b4fc;
+          color: var(--neon-cyan);
           margin: 0 0 0.25rem;
+          text-shadow: 0 0 5px rgba(0, 255, 255, 0.8);
+          font-family: 'Courier New', monospace;
         }
 
         .badge-value {
           margin: 0;
           font-size: 0.95rem;
-          color: #e0e7ff;
+          color: var(--neon-green);
+          text-shadow: 0 0 5px rgba(0, 255, 65, 0.8);
+          font-family: 'Courier New', monospace;
         }
 
         .cta-buttons {
@@ -384,8 +481,11 @@ const Hero = () => {
           gap: 1rem;
           padding: 1.2rem;
           border-radius: 1.5rem;
-          background: rgba(59, 130, 246, 0.08);
-          border: 1px solid rgba(59, 130, 246, 0.25);
+          background: rgba(0, 0, 0, 0.5);
+          border: 2px solid var(--neon-purple);
+          box-shadow: 
+            0 0 20px rgba(176, 38, 255, 0.4),
+            inset 0 0 20px rgba(176, 38, 255, 0.1);
           margin-bottom: 3rem;
         }
 
@@ -399,6 +499,9 @@ const Hero = () => {
           margin: 0;
           font-size: 2rem;
           font-weight: 700;
+          color: var(--neon-yellow);
+          text-shadow: 0 0 10px rgba(255, 255, 0, 0.8);
+          font-family: 'Courier New', monospace;
         }
 
         .stat-label {
@@ -406,7 +509,9 @@ const Hero = () => {
           text-transform: uppercase;
           letter-spacing: 0.14em;
           font-size: 0.65rem;
-          color: rgba(226, 232, 240, 0.8);
+          color: var(--neon-cyan);
+          text-shadow: 0 0 5px rgba(0, 255, 255, 0.8);
+          font-family: 'Courier New', monospace;
         }
 
         .scroll-indicator {
@@ -418,9 +523,13 @@ const Hero = () => {
           flex-direction: column;
           align-items: center;
           gap: 0.5rem;
-          color: white;
-          opacity: 0.7;
+          color: var(--neon-green);
+          opacity: 0.9;
           font-size: 0.9rem;
+          text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+          font-family: 'Courier New', monospace;
+          text-transform: uppercase;
+          letter-spacing: 1px;
         }
 
         .scroll-arrow {
@@ -432,8 +541,9 @@ const Hero = () => {
         .scroll-line {
           width: 100%;
           height: 100%;
-          background: white;
+          background: var(--neon-green);
           border-radius: 1px;
+          box-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
         }
 
         .scroll-arrow-head {
@@ -445,7 +555,8 @@ const Hero = () => {
           height: 0;
           border-left: 4px solid transparent;
           border-right: 4px solid transparent;
-          border-top: 6px solid white;
+          border-top: 6px solid var(--neon-green);
+          filter: drop-shadow(0 0 5px rgba(0, 255, 65, 0.8));
         }
 
         /* Smart TV and Large Displays */
@@ -453,6 +564,7 @@ const Hero = () => {
           .hero-section {
             min-height: 100vh;
             padding: 4rem 0;
+            padding-top: 100px; /* Account for larger navbar */
           }
 
           .hero-content {
@@ -493,6 +605,7 @@ const Hero = () => {
           .hero-section {
             min-height: 100vh;
             padding: 3rem 0;
+            padding-top: 90px; /* Account for larger navbar */
           }
 
           .hero-content {
@@ -632,6 +745,10 @@ const Hero = () => {
 
         /* Mobile Devices */
         @media (max-width: 480px) {
+          .hero-section {
+            padding-top: 65px; /* Account for smaller navbar */
+          }
+
           .hero-content {
             padding: 1.5rem 0.5rem;
           }

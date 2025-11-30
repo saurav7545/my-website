@@ -117,11 +117,13 @@ const Footer = () => {
 
       <style jsx>{`
         .footer {
-          background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-          color: white;
+          background: rgba(0, 0, 0, 0.9);
+          color: var(--neon-green);
           padding: 3rem 0 1rem;
           position: relative;
           overflow: hidden;
+          border-top: 2px solid var(--neon-green);
+          box-shadow: 0 -5px 30px rgba(0, 255, 65, 0.3);
         }
 
         .footer::before {
@@ -182,8 +184,10 @@ const Footer = () => {
         }
 
         .footer-brand p {
-          color: rgba(255, 255, 255, 0.8);
+          color: var(--neon-cyan);
           font-size: 1.1rem;
+          text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+          font-family: 'Courier New', monospace;
         }
 
         .footer-links {
@@ -196,7 +200,11 @@ const Footer = () => {
           font-size: 1.2rem;
           font-weight: 600;
           margin-bottom: 1rem;
-          color: white;
+          color: var(--neon-green);
+          text-shadow: 0 0 10px rgba(0, 255, 65, 0.6);
+          font-family: 'Courier New', monospace;
+          text-transform: uppercase;
+          letter-spacing: 1px;
         }
 
         .footer-section ul {
@@ -209,13 +217,15 @@ const Footer = () => {
         }
 
         .footer-section a {
-          color: rgba(255, 255, 255, 0.7);
+          color: var(--neon-cyan);
+          text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
           text-decoration: none;
           transition: color 0.3s ease;
         }
 
         .footer-section a:hover {
-          color: white;
+          color: var(--neon-green);
+          text-shadow: 0 0 10px rgba(0, 255, 65, 0.6);
         }
 
         .footer-bottom {
@@ -223,7 +233,7 @@ const Footer = () => {
           justify-content: space-between;
           align-items: center;
           padding-top: 2rem;
-          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          border-top: 1px solid rgba(0, 255, 65, 0.3);
           flex-wrap: wrap;
           gap: 1rem;
         }
@@ -235,7 +245,8 @@ const Footer = () => {
         }
 
         .footer-copyright p {
-          color: rgba(255, 255, 255, 0.8);
+          color: var(--neon-cyan);
+          text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
           margin: 0;
         }
 
@@ -250,17 +261,20 @@ const Footer = () => {
           align-items: center;
           gap: 0.5rem;
           padding: 0.5rem 1rem;
-          background: rgba(255, 255, 255, 0.1);
+          background: rgba(0, 255, 65, 0.1);
+          border: 1px solid rgba(0, 255, 65, 0.3);
           border-radius: 20px;
           font-size: 0.9rem;
           font-weight: 500;
-          color: rgba(255, 255, 255, 0.8);
+          color: var(--neon-cyan);
+          text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
           transition: all 0.3s ease;
         }
 
         .badge:hover {
-          background: rgba(255, 255, 255, 0.2);
-          color: white;
+          background: rgba(0, 255, 65, 0.2);
+          border-color: var(--neon-green);
+          box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
         }
 
         .footer-heart {

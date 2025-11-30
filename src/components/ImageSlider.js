@@ -43,6 +43,7 @@ const ImageSlider = ({ images, interval = 5000, className = "" }) => {
             src={images[currentIndex]}
             alt={`Logo ${currentIndex + 1}`}
             className="slider-image"
+            loading="lazy"
             variants={slideVariants}
             initial="enter"
             animate="center"

@@ -107,6 +107,7 @@ const About = () => {
                 <img 
                   src="/images/placeholder.svg" 
                   alt="Saurav Kumar - Computer Science Engineer"
+                  loading="lazy"
                 />
                 <div className="image-overlay">
                   <div className="overlay-content">
@@ -267,7 +268,9 @@ const About = () => {
           font-size: 1.3rem;
           font-weight: 600;
           margin-bottom: 1rem;
-          color: var(--text-dark);
+          color: var(--neon-cyan);
+          text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+          font-family: 'Courier New', monospace;
         }
 
         .skill-item p {

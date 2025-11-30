@@ -221,19 +221,23 @@ const Contact = () => {
         .contact-item h3 {
           font-size: 1.3rem;
           font-weight: 600;
-          color: var(--text-dark);
+          color: var(--neon-cyan);
           margin-bottom: 1rem;
+          text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+          font-family: 'Courier New', monospace;
         }
 
         .contact-item a {
-          color: var(--primary-color);
+          color: var(--neon-green);
           text-decoration: none;
           font-weight: 500;
           transition: color 0.3s ease;
+          text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
         }
 
         .contact-item a:hover {
-          color: var(--text-dark);
+          color: var(--neon-cyan);
+          text-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
         }
 
         .contact-item p {
@@ -249,8 +253,12 @@ const Contact = () => {
         .social-links h3 {
           font-size: 1.8rem;
           font-weight: 700;
-          color: var(--text-dark);
+          color: var(--neon-cyan);
           margin-bottom: 2rem;
+          text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+          font-family: 'Courier New', monospace;
+          text-transform: uppercase;
+          letter-spacing: 2px;
         }
 
         .social-links-grid {
@@ -314,8 +322,12 @@ const Contact = () => {
         .contact-cta h3 {
           font-size: 2rem;
           font-weight: 700;
-          color: var(--text-dark);
+          color: var(--neon-green);
           margin-bottom: 1rem;
+          text-shadow: 0 0 15px rgba(0, 255, 65, 0.6);
+          font-family: 'Courier New', monospace;
+          text-transform: uppercase;
+          letter-spacing: 2px;
         }
 
         .contact-cta p {

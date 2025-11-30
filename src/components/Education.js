@@ -198,8 +198,10 @@ const Education = () => {
         .college-name {
           font-size: 2rem;
           font-weight: 700;
-          color: var(--text-dark);
+          color: var(--neon-yellow);
           margin-bottom: 2rem;
+          text-shadow: 0 0 15px rgba(255, 255, 0, 0.6);
+          font-family: 'Courier New', monospace;
         }
 
         .college-details {
@@ -246,8 +248,12 @@ const Education = () => {
         .academic-achievements h3 {
           font-size: 1.8rem;
           font-weight: 700;
-          color: var(--text-dark);
+          color: var(--neon-purple);
           margin-bottom: 2rem;
+          text-shadow: 0 0 15px rgba(176, 38, 255, 0.6);
+          font-family: 'Courier New', monospace;
+          text-transform: uppercase;
+          letter-spacing: 2px;
         }
 
         .achievements-grid {
@@ -280,8 +286,10 @@ const Education = () => {
         .achievement-item h4 {
           font-size: 1.3rem;
           font-weight: 600;
-          color: var(--text-dark);
+          color: var(--neon-green);
           margin-bottom: 1rem;
+          text-shadow: 0 0 10px rgba(0, 255, 65, 0.6);
+          font-family: 'Courier New', monospace;
         }
 
         .achievement-item p {

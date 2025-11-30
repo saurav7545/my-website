@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ImageSlider from './ImageSlider';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const logoImages = [
     '/images/logo1.svg',
@@ -25,28 +28,49 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+
   const navItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'About Me', href: '/about-person' },
-    { name: 'Projects', href: '/projects' },
-    { name: 'Gallery', href: '#gallery' },
-    { name: 'Social', href: '#social' },
-    { name: 'Video', href: '#video' },
-    { name: 'Contact', href: '#contact' }
+    { name: 'Home', href: '#home', isHash: true },
+    { name: 'About', href: '#about', isHash: true },
+    { name: 'About Me', href: '/about-person', isHash: false },
+    { name: 'Projects', href: '/projects', isHash: false },
+    { name: 'Gallery', href: '#gallery', isHash: true },
+    { name: 'Social', href: '#social', isHash: true },
+    { name: 'Video', href: '#video', isHash: true },
+    { name: 'Contact', href: '#contact', isHash: true }
   ];
 
-  const scrollToSection = (href) => {
-    if (href.startsWith('#')) {
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+  const scrollToSection = (href, isHash) => {
+    setIsOpen(false);
+    
+    if (isHash) {
+      // If we're not on home page, navigate to home first
+      if (location.pathname !== '/') {
+        navigate('/');
+        // Wait for navigation then scroll - use requestAnimationFrame for better timing
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            const element = document.querySelector(href);
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }, 150);
+        });
+      } else {
+        // We're on home page, just scroll
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       }
     } else {
-      // For external links, navigate normally
-      window.location.href = href;
+      // Navigate to different page
+      navigate(href);
     }
-    setIsOpen(false);
   };
 
   return (
@@ -60,12 +84,13 @@ const Navbar = () => {
           className="nav-logo"
           whileHover={{ scale: 1.05 }}
         >
-          <a href="#home" onClick={(e) => { e.preventDefault(); scrollToSection('#home'); }}>
+          <a href="#home" onClick={(e) => { e.preventDefault(); scrollToSection('#home', true); }} className="logo-link">
             <ImageSlider 
               images={logoImages} 
               interval={5000} 
               className="logo-slider"
             />
+            <span className="logo-text">Saurav</span>
           </a>
         </motion.div>
 
@@ -81,7 +106,7 @@ const Navbar = () => {
               <a
                 href={item.href}
                 className="nav-link"
-                onClick={(e) => { e.preventDefault(); scrollToSection(item.href); }}
+                onClick={(e) => { e.preventDefault(); scrollToSection(item.href, item.isHash); }}
               >
                 {item.name}
               </a>
@@ -125,16 +150,22 @@ const Navbar = () => {
           position: fixed;
           top: 0;
           width: 100%;
-          background: rgba(255, 255, 255, 0.95);
+          background: rgba(0, 0, 0, 0.9);
           backdrop-filter: blur(10px);
           z-index: 1000;
           transition: all 0.3s ease;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          border-bottom: 2px solid var(--neon-green);
+          box-shadow: 
+            0 0 20px rgba(0, 255, 65, 0.5),
+            0 2px 20px rgba(0, 0, 0, 0.8);
         }
 
         .navbar.scrolled {
-          background: rgba(255, 255, 255, 0.98);
-          box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+          background: rgba(0, 0, 0, 0.95);
+          box-shadow: 
+            0 0 30px rgba(0, 255, 65, 0.6),
+            0 2px 30px rgba(0, 0, 0, 0.9);
+          border-bottom-color: var(--neon-cyan);
         }
 
         .nav-container {
@@ -147,10 +178,44 @@ const Navbar = () => {
           height: 70px;
         }
 
-        .nav-logo a {
+        .nav-logo {
           display: flex;
           align-items: center;
+          flex-shrink: 0;
+        }
+
+        .logo-link {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
           text-decoration: none;
+          color: var(--neon-green);
+        }
+
+        .logo-text {
+          font-size: 1.5rem;
+          font-weight: 700;
+          background: linear-gradient(45deg, #00ff41, #00ffff, #b026ff);
+          background-size: 200% 200%;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          white-space: nowrap;
+          display: block;
+          text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+          animation: logoGlow 2s ease-in-out infinite alternate;
+          font-family: 'Courier New', monospace;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+        }
+
+        @keyframes logoGlow {
+          0% { 
+            filter: drop-shadow(0 0 5px rgba(0, 255, 65, 0.8));
+          }
+          100% { 
+            filter: drop-shadow(0 0 15px rgba(0, 255, 255, 1));
+          }
         }
 
         .logo-img {
@@ -166,6 +231,7 @@ const Navbar = () => {
         .logo-slider {
           width: 40px;
           height: 40px;
+          flex-shrink: 0;
         }
 
         .logo-slider .slider-image {
@@ -180,19 +246,29 @@ const Navbar = () => {
         .nav-menu {
           display: flex;
           list-style: none;
-          gap: 2rem;
+          gap: 1.5rem;
           margin: 0;
           padding: 0;
-          flex-wrap: nowrap;
+          flex-wrap: wrap;
           align-items: center;
+          justify-content: flex-end;
+          flex: 1;
+          min-width: 0;
         }
 
         .nav-link {
-          color: var(--text-dark);
+          color: var(--neon-green);
           text-decoration: none;
-          font-weight: 500;
+          font-weight: 700;
           transition: all 0.3s ease;
           position: relative;
+          white-space: nowrap;
+          display: block;
+          padding: 0.5rem 0;
+          text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+          font-family: 'Courier New', monospace;
+          letter-spacing: 1px;
+          text-transform: uppercase;
         }
 
         .nav-link::after {
@@ -202,7 +278,8 @@ const Navbar = () => {
           left: 0;
           width: 0;
           height: 2px;
-          background: var(--gradient-primary);
+          background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan), var(--neon-purple));
+          box-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
           transition: width 0.3s ease;
         }
 
@@ -211,34 +288,40 @@ const Navbar = () => {
         }
 
         .nav-link:hover {
-          color: var(--primary-color);
+          color: var(--neon-cyan);
+          text-shadow: 
+            0 0 10px rgba(0, 255, 255, 0.8),
+            0 0 20px rgba(0, 255, 255, 0.6);
+          transform: translateY(-2px);
         }
 
         .hamburger {
           display: none;
           font-size: 1.5rem;
-          color: var(--text-dark);
+          color: var(--neon-green);
           cursor: pointer;
           transition: all 0.3s ease;
+          text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
         }
 
         .hamburger:hover {
-          color: var(--primary-color);
+          color: var(--neon-cyan);
+          text-shadow: 
+            0 0 15px rgba(0, 255, 255, 1),
+            0 0 25px rgba(0, 255, 255, 0.6);
+          transform: scale(1.1);
         }
 
         /* Smart TV and Large Displays */
         @media (min-width: 2560px) {
           .nav-container {
-            padding: 0 3rem;
+            max-width: 2400px;
+            padding: 0 4rem;
             height: 100px;
           }
 
-          .nav-logo {
-            height: 80px;
-          }
-
-          .logo-img {
-            height: 60px;
+          .logo-text {
+            font-size: 2rem;
           }
 
           .logo-slider {
@@ -264,16 +347,13 @@ const Navbar = () => {
         /* Large Desktop Displays */
         @media (min-width: 1920px) and (max-width: 2559px) {
           .nav-container {
-            padding: 0 2rem;
+            max-width: 1800px;
+            padding: 0 3rem;
             height: 90px;
           }
 
-          .nav-logo {
-            height: 75px;
-          }
-
-          .logo-img {
-            height: 55px;
+          .logo-text {
+            font-size: 1.8rem;
           }
 
           .logo-slider {
@@ -299,41 +379,78 @@ const Navbar = () => {
         /* Standard Desktop */
         @media (min-width: 1200px) and (max-width: 1919px) {
           .nav-container {
-            padding: 0 1.5rem;
+            padding: 0 2rem;
+          }
+
+          .logo-text {
+            font-size: 1.5rem;
           }
 
           .nav-menu {
-            gap: 2rem;
+            gap: 1.5rem;
           }
 
           .nav-link {
-            font-size: 1.1rem;
-            padding: 0.7rem 1rem;
+            font-size: 1rem;
+            padding: 0.5rem 0.8rem;
           }
         }
 
         /* Tablet Landscape */
         @media (min-width: 769px) and (max-width: 1199px) {
           .nav-container {
-            padding: 0 1rem;
+            padding: 0 1.5rem;
+          }
+
+          .logo-text {
+            font-size: 1.3rem;
+          }
+
+          .logo-slider {
+            width: 35px;
+            height: 35px;
+          }
+
+          .logo-slider .slider-image {
+            width: 35px;
+            height: 35px;
           }
 
           .nav-menu {
-            gap: 1rem;
+            gap: 0.8rem;
           }
 
           .nav-link {
             font-size: 0.9rem;
-            padding: 0.5rem 0.6rem;
+            padding: 0.5rem 0.5rem;
             white-space: nowrap;
           }
         }
 
         /* Mobile Devices */
         @media (max-width: 768px) {
+          .nav-container {
+            padding: 0 1rem;
+          }
+
+          .logo-text {
+            font-size: 1.2rem;
+          }
+
+          .logo-slider {
+            width: 32px;
+            height: 32px;
+          }
+
+          .logo-slider .slider-image {
+            width: 32px;
+            height: 32px;
+          }
+
           .hamburger {
             display: block;
             z-index: 1001;
+            flex-shrink: 0;
           }
 
           .nav-menu {
@@ -342,16 +459,20 @@ const Navbar = () => {
             left: -100%;
             width: 100%;
             height: calc(100vh - 70px);
-            background: rgba(255, 255, 255, 0.98);
+            background: rgba(0, 0, 0, 0.98);
             backdrop-filter: blur(10px);
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
             padding-top: 2rem;
             transition: left 0.3s ease;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            border-top: 2px solid var(--neon-green);
+            box-shadow: 
+              0 0 30px rgba(0, 255, 65, 0.5),
+              inset 0 0 50px rgba(0, 255, 65, 0.1);
             overflow-y: auto;
             z-index: 999;
+            gap: 0;
           }
 
           .nav-menu.active {
@@ -359,7 +480,7 @@ const Navbar = () => {
           }
 
           .nav-item {
-            margin: 0.75rem 0;
+            margin: 0.5rem 0;
             width: 100%;
             text-align: center;
           }
@@ -368,35 +489,56 @@ const Navbar = () => {
             font-size: 1.1rem;
             display: block;
             padding: 0.75rem 1rem;
+            width: 100%;
           }
         }
 
         /* Extra Small Mobile */
         @media (max-width: 480px) {
           .nav-container {
-            padding: 0 0.5rem;
+            padding: 0 0.75rem;
+            height: 65px;
           }
 
-          .nav-logo {
-            height: 45px;
-          }
-
-          .logo-img {
-            height: 30px;
+          .logo-text {
+            font-size: 1rem;
           }
 
           .logo-slider {
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
           }
 
           .logo-slider .slider-image {
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
+          }
+
+          .nav-menu {
+            top: 65px;
+            height: calc(100vh - 65px);
           }
 
           .nav-link {
             font-size: 1rem;
+            padding: 0.7rem 1rem;
+          }
+        }
+
+        /* Extra Extra Small Mobile */
+        @media (max-width: 320px) {
+          .logo-text {
+            font-size: 0.9rem;
+          }
+
+          .logo-slider {
+            width: 24px;
+            height: 24px;
+          }
+
+          .logo-slider .slider-image {
+            width: 24px;
+            height: 24px;
           }
         }
       `}</style>

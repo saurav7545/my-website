@@ -95,6 +95,7 @@ const AboutPerson = () => {
                 <img 
                   src="/images/placeholder.svg" 
                   alt="Saurav Kumar"
+                  loading="lazy"
                 />
                 
               </motion.div>
@@ -256,6 +257,25 @@ const AboutPerson = () => {
           min-height: 100vh;
           background: var(--bg-white);
           padding: 100px 0;
+          padding-top: calc(100px + 70px); /* Account for fixed navbar */
+        }
+
+        @media (min-width: 2560px) {
+          .about-person-page {
+            padding-top: calc(100px + 100px); /* Account for larger navbar on TV */
+          }
+        }
+
+        @media (min-width: 1920px) and (max-width: 2559px) {
+          .about-person-page {
+            padding-top: calc(100px + 90px); /* Account for larger navbar */
+          }
+        }
+
+        @media (max-width: 480px) {
+          .about-person-page {
+            padding-top: calc(80px + 65px); /* Account for smaller navbar */
+          }
         }
 
         .about-hero {
@@ -327,14 +347,19 @@ const AboutPerson = () => {
         .hero-text h1 {
           font-size: 4rem;
           font-weight: 800;
-          color: var(--text-dark);
           margin-bottom: 1rem;
-          background: var(--gradient-primary);
+          background: var(--gradient-hacker);
+          background-size: 200% 200%;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
           line-height: 1;
           white-space: nowrap;
+          text-shadow: 0 0 20px rgba(0, 255, 65, 0.8);
+          animation: gradientShift 3s ease infinite;
+          font-family: 'Courier New', monospace;
+          letter-spacing: 3px;
+          text-transform: uppercase;
         }
 
         .hero-subtitle {
@@ -348,16 +373,20 @@ const AboutPerson = () => {
         }
         .motion.a1 {
           margin-left: 1rem;
-          bgcolor: black;
-          color: white;
+          background: rgba(0, 255, 65, 0.1);
+          color: var(--neon-green);
+          border: 2px solid var(--neon-green);
           border-radius: 10px;
           padding: 10px;
           text-decoration: none;
           transition: all 0.3s ease;
-          &:hover {
-            background-color: white;
-            color: black;
-          }
+        }
+        
+        .motion.a1:hover {
+          background-color: rgba(0, 255, 65, 0.2);
+          color: var(--neon-cyan);
+          border-color: var(--neon-cyan);
+          box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
         }
 
         .personal-story h2 {
@@ -365,7 +394,11 @@ const AboutPerson = () => {
           font-weight: 700;
           text-align: center;
           margin-bottom: 2rem;
-          color: var(--text-dark);
+          color: var(--neon-cyan);
+          text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+          font-family: 'Courier New', monospace;
+          text-transform: uppercase;
+          letter-spacing: 2px;
         }
 
         .story-content p {
@@ -408,8 +441,10 @@ const AboutPerson = () => {
         .info-card h3 {
           font-size: 1.5rem;
           font-weight: 600;
-          color: var(--text-dark);
+          color: var(--neon-green);
           margin-bottom: 1rem;
+          text-shadow: 0 0 10px rgba(0, 255, 65, 0.6);
+          font-family: 'Courier New', monospace;
         }
 
         .info-card p {
@@ -426,7 +461,11 @@ const AboutPerson = () => {
           font-weight: 700;
           text-align: center;
           margin-bottom: 2rem;
-          color: var(--text-dark);
+          color: var(--neon-purple);
+          text-shadow: 0 0 15px rgba(176, 38, 255, 0.6);
+          font-family: 'Courier New', monospace;
+          text-transform: uppercase;
+          letter-spacing: 2px;
         }
 
         .achievements-grid {
@@ -460,8 +499,10 @@ const AboutPerson = () => {
         .achievement-card h3 {
           font-size: 1.3rem;
           font-weight: 600;
-          color: var(--text-dark);
+          color: var(--neon-cyan);
           margin-bottom: 1rem;
+          text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+          font-family: 'Courier New', monospace;
         }
 
         .achievement-card p {
@@ -478,7 +519,11 @@ const AboutPerson = () => {
           font-weight: 700;
           text-align: center;
           margin-bottom: 2rem;
-          color: var(--text-dark);
+          color: var(--neon-yellow);
+          text-shadow: 0 0 15px rgba(255, 255, 0, 0.6);
+          font-family: 'Courier New', monospace;
+          text-transform: uppercase;
+          letter-spacing: 2px;
         }
 
         .goals-content p {
@@ -500,8 +545,12 @@ const AboutPerson = () => {
         .about-cta h2 {
           font-size: 2rem;
           font-weight: 700;
-          color: var(--text-dark);
+          color: var(--neon-green);
           margin-bottom: 1rem;
+          text-shadow: 0 0 15px rgba(0, 255, 65, 0.6);
+          font-family: 'Courier New', monospace;
+          text-transform: uppercase;
+          letter-spacing: 2px;
         }
 
         .about-cta p {

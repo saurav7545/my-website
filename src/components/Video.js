@@ -166,6 +166,8 @@ const Video = () => {
                       <img
                         src={`/assets/images/${video.thumbnail}`}
                         alt={video.title}
+                        loading="lazy"
+                        decoding="async"
                         onError={(e) => {
                           e.target.src = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="180"><rect width="300" height="180" fill="%23667eea"/><text x="150" y="90" text-anchor="middle" fill="white" font-size="18">${video.title}</text></svg>`;
                         }}
@@ -205,6 +207,8 @@ const Video = () => {
                       <img
                         src={`/assets/images/${video.thumbnail}`}
                         alt={video.title}
+                        loading="lazy"
+                        decoding="async"
                         onError={(e) => {
                           e.target.src = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="180"><rect width="300" height="180" fill="%23667eea"/><text x="150" y="90" text-anchor="middle" fill="white" font-size="18">${video.title}</text></svg>`;
                         }}
@@ -297,8 +301,10 @@ const Video = () => {
         .video-placeholder h3 {
           font-size: 1.8rem;
           font-weight: 700;
-          color: var(--text-dark);
+          color: var(--neon-pink);
           margin-bottom: 1rem;
+          text-shadow: 0 0 15px rgba(255, 0, 255, 0.6);
+          font-family: 'Courier New', monospace;
         }
 
         .video-placeholder p {
@@ -397,8 +403,10 @@ const Video = () => {
         .video-item h4 {
           font-size: 1.2rem;
           font-weight: 600;
-          color: var(--text-dark);
+          color: var(--neon-green);
           margin: 1rem 0 0.5rem 1rem;
+          text-shadow: 0 0 10px rgba(0, 255, 65, 0.6);
+          font-family: 'Courier New', monospace;
         }
 
         .video-item p {

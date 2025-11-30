@@ -223,8 +223,10 @@ const Social = () => {
         .social-card h3 {
           font-size: 1.5rem;
           font-weight: 700;
-          color: var(--text-dark);
+          color: var(--neon-purple);
           margin-bottom: 1rem;
+          text-shadow: 0 0 10px rgba(176, 38, 255, 0.6);
+          font-family: 'Courier New', monospace;
         }
 
         .social-card p {
@@ -255,7 +257,9 @@ const Social = () => {
 
         .stat-number {
           font-size: 1.2rem;
-          color: var(--text-dark);
+          color: var(--neon-yellow);
+          text-shadow: 0 0 10px rgba(255, 255, 0, 0.6);
+          font-family: 'Courier New', monospace;
         }
 
         .stat-label {

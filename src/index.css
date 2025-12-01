@@ -491,14 +491,19 @@ code {
   
   .section-title {
     font-size: 5rem;
-    line-height: 1;
-    white-space: nowrap;
+    line-height: 1.2;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
   
   .section-subtitle {
     font-size: 1.8rem;
-    line-height: 1.1;
-    white-space: nowrap;
+    line-height: 1.4;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
   }
   
   .btn {
@@ -544,16 +549,21 @@ code {
   
   .section-title {
     font-size: 4rem;
-    line-height: 1;
+    line-height: 1.2;
     margin-bottom: 1.5rem;
-    white-space: nowrap;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
   
   .section-subtitle {
     font-size: 1.5rem;
-    line-height: 1.2;
+    line-height: 1.4;
     margin-bottom: 2rem;
-    white-space: nowrap;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
   }
   
   body {

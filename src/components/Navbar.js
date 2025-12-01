@@ -41,7 +41,8 @@ const Navbar = () => {
     { name: 'Gallery', href: '#gallery', isHash: true },
     { name: 'Social', href: '#social', isHash: true },
     { name: 'Video', href: '#video', isHash: true },
-    { name: 'Contact', href: '#contact', isHash: true }
+    { name: 'Contact', href: '#contact', isHash: true },
+    { name: 'Admin', href: '/db', isHash: false }
   ];
 
   const scrollToSection = (href, isHash) => {
@@ -176,12 +177,17 @@ const Navbar = () => {
           justify-content: space-between;
           align-items: center;
           height: 70px;
+          width: 100%;
+          box-sizing: border-box;
+          overflow: visible;
         }
 
         .nav-logo {
           display: flex;
           align-items: center;
           flex-shrink: 0;
+          min-width: 0;
+          max-width: 200px;
         }
 
         .logo-link {
@@ -249,11 +255,12 @@ const Navbar = () => {
           gap: 1.5rem;
           margin: 0;
           padding: 0;
-          flex-wrap: wrap;
+          flex-wrap: nowrap;
           align-items: center;
           justify-content: flex-end;
           flex: 1;
           min-width: 0;
+          overflow: visible;
         }
 
         .nav-link {
@@ -302,6 +309,8 @@ const Navbar = () => {
           cursor: pointer;
           transition: all 0.3s ease;
           text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+          flex-shrink: 0;
+          margin-left: 1rem;
         }
 
         .hamburger:hover {
@@ -380,6 +389,7 @@ const Navbar = () => {
         @media (min-width: 1200px) and (max-width: 1919px) {
           .nav-container {
             padding: 0 2rem;
+            max-width: 1200px;
           }
 
           .logo-text {
@@ -387,12 +397,14 @@ const Navbar = () => {
           }
 
           .nav-menu {
-            gap: 1.5rem;
+            gap: 1.2rem;
+            flex-wrap: nowrap;
           }
 
           .nav-link {
-            font-size: 1rem;
-            padding: 0.5rem 0.8rem;
+            font-size: 0.95rem;
+            padding: 0.5rem 0.6rem;
+            white-space: nowrap;
           }
         }
 
@@ -400,10 +412,11 @@ const Navbar = () => {
         @media (min-width: 769px) and (max-width: 1199px) {
           .nav-container {
             padding: 0 1.5rem;
+            max-width: 100%;
           }
 
           .logo-text {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
           }
 
           .logo-slider {
@@ -417,13 +430,26 @@ const Navbar = () => {
           }
 
           .nav-menu {
+            gap: 0.6rem;
+            flex-wrap: nowrap;
+          }
+
+          .nav-link {
+            font-size: 0.85rem;
+            padding: 0.5rem 0.4rem;
+            white-space: nowrap;
+          }
+        }
+
+        /* Medium Laptop - Better spacing */
+        @media (min-width: 1024px) and (max-width: 1199px) {
+          .nav-menu {
             gap: 0.8rem;
           }
 
           .nav-link {
             font-size: 0.9rem;
             padding: 0.5rem 0.5rem;
-            white-space: nowrap;
           }
         }
 

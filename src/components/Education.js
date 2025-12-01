@@ -202,6 +202,10 @@ const Education = () => {
           margin-bottom: 2rem;
           text-shadow: 0 0 15px rgba(255, 255, 0, 0.6);
           font-family: 'Courier New', monospace;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          line-height: 1.3;
+          padding: 0 1rem;
         }
 
         .college-details {
@@ -216,6 +220,15 @@ const Education = () => {
           margin-bottom: 1rem;
           color: var(--text-light);
           font-size: 1.1rem;
+          flex-wrap: wrap;
+          text-align: center;
+          padding: 0 1rem;
+        }
+
+        .detail-item span {
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          line-height: 1.5;
         }
 
         .detail-item svg {
@@ -325,8 +338,19 @@ const Education = () => {
         .section-header {
           display: flex;
           align-items: center;
+          justify-content: center;
           gap: 1rem;
           margin-bottom: 1rem;
+          flex-wrap: wrap;
+        }
+
+        .section-title {
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          hyphens: auto;
+          white-space: normal;
+          line-height: 1.2;
+          max-width: 100%;
         }
 
         .section-logo {
@@ -367,6 +391,42 @@ const Education = () => {
           .college-image {
             width: 150px;
             height: 90px;
+          }
+
+          .section-header {
+            flex-direction: column;
+            gap: 0.5rem;
+          }
+
+          .section-title {
+            font-size: 1.5rem;
+            line-height: 1.3;
+          }
+        }
+
+        /* Large Desktop - Fix text wrapping */
+        @media (min-width: 1200px) {
+          .section-title {
+            white-space: normal;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.3;
+          }
+
+          .section-header {
+            flex-wrap: wrap;
+            justify-content: center;
+          }
+        }
+
+        /* Extra Large Desktop */
+        @media (min-width: 1920px) {
+          .section-title {
+            white-space: normal;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.3;
+            font-size: clamp(2rem, 4vw, 3.5rem);
           }
         }
       `}</style>

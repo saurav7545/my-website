@@ -1,23 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { FaCamera } from 'react-icons/fa';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { FaCamera, FaTimes } from 'react-icons/fa';
 import ImageSlider from './ImageSlider';
 
 // API Configuration
-const API_BASE_URL = (
-  process.env.REACT_APP_API_URL ?? 'https://backend1-2agm.onrender.com'
-).replace(/\/$/, '');
+import { API_BASE_URL, getBackendBaseURL } from '../config/api';
 
-const BACKEND_BASE_URL = (() => {
-  const fallback = API_BASE_URL.replace(/\/api\/?$/, '');
-  if (typeof window === 'undefined') return fallback;
-  try {
-    const resolved = new URL(API_BASE_URL, window.location.origin);
-    return resolved.origin.replace(/\/$/, '');
-  } catch {
-    return fallback;
-  }
-})();
+const BACKEND_BASE_URL = getBackendBaseURL();
 
 // Utility Functions
 const fixImageUrl = (imageUrl) => {
@@ -45,6 +34,9 @@ const Gallery = () => {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [imagePosition, setImagePosition] = useState({ x: 0, y: 0, width: 0, height: 0 });
 
   useEffect(() => {
     let isMounted = true;
@@ -137,6 +129,41 @@ const Gallery = () => {
     }
   };
 
+  const handleImageClick = (photo, event) => {
+    const imgElement = event.currentTarget;
+    const rect = imgElement.getBoundingClientRect();
+    const scrollY = window.scrollY || window.pageYOffset;
+    const scrollX = window.scrollX || window.pageXOffset;
+    
+    setImagePosition({
+      x: rect.left + rect.width / 2 + scrollX,
+      y: rect.top + rect.height / 2 + scrollY,
+      width: rect.width,
+      height: rect.height
+    });
+    
+    setSelectedImage(photo);
+    setIsModalOpen(true);
+    document.body.style.overflow = 'hidden'; // Prevent background scroll
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedImage(null);
+    document.body.style.overflow = 'unset'; // Restore scroll
+  };
+
+  // Close modal on ESC key
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && isModalOpen) {
+        closeModal();
+      }
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [isModalOpen]);
+
   return (
     <section id="gallery" className="gallery-section" ref={ref}>
       <div className="container">
@@ -203,6 +230,8 @@ const Gallery = () => {
                         src={photo.image}
                         alt={photo.title || 'Gallery photo'}
                         loading="lazy"
+                        onClick={(e) => handleImageClick(photo, e)}
+                        style={{ cursor: 'pointer' }}
                       />
                     ) : (
                       <div className="placeholder">
@@ -226,6 +255,71 @@ const Gallery = () => {
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Image Modal/Popup */}
+      <AnimatePresence>
+        {isModalOpen && selectedImage && (
+          <motion.div
+            className="image-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeModal}
+          >
+            <motion.div
+              className="image-modal-content"
+              initial={{ 
+                scale: imagePosition.width && window.innerWidth ? Math.min(imagePosition.width / window.innerWidth, 0.4) : 0.3,
+                opacity: 0,
+                x: imagePosition.x ? imagePosition.x - window.innerWidth / 2 : 0,
+                y: imagePosition.y ? imagePosition.y - window.innerHeight / 2 : 0
+              }}
+              animate={{ 
+                scale: 1,
+                opacity: 1,
+                x: 0,
+                y: 0
+              }}
+              exit={{ 
+                scale: imagePosition.width && window.innerWidth ? Math.min(imagePosition.width / window.innerWidth, 0.4) : 0.3,
+                opacity: 0,
+                x: imagePosition.x ? imagePosition.x - window.innerWidth / 2 : 0,
+                y: imagePosition.y ? imagePosition.y - window.innerHeight / 2 : 0
+              }}
+              transition={{ 
+                type: "spring",
+                stiffness: 300,
+                damping: 30,
+                duration: 0.4
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="modal-close-btn" onClick={closeModal}>
+                <FaTimes />
+              </button>
+              <div className="modal-image-container">
+                <img
+                  src={selectedImage.image}
+                  alt={selectedImage.title || 'Gallery photo'}
+                  className="modal-image"
+                />
+              </div>
+              {selectedImage.title && (
+                <div className="modal-image-info">
+                  <h3>{selectedImage.title}</h3>
+                  {selectedImage.category && (
+                    <span className="modal-category">{selectedImage.category}</span>
+                  )}
+                  {selectedImage.notes && (
+                    <p className="modal-notes">{selectedImage.notes}</p>
+                  )}
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <style jsx>{`
         .gallery-section {
           background: var(--bg-white);
@@ -373,6 +467,184 @@ const Gallery = () => {
         @keyframes spin {
           to { transform: rotate(360deg); }
         }
+
+        /* Image Modal Styles */
+        .image-modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.95);
+          backdrop-filter: blur(10px);
+          z-index: 10000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 2rem;
+          cursor: pointer;
+          overflow: auto;
+          box-sizing: border-box;
+        }
+
+        .image-modal-content {
+          position: relative;
+          max-width: 90vw;
+          max-height: 90vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          cursor: default;
+          transform-origin: center center;
+          will-change: transform, opacity;
+          margin: auto;
+        }
+
+        .modal-close-btn {
+          position: absolute;
+          top: -50px;
+          right: 0;
+          background: rgba(255, 255, 255, 0.1);
+          border: 2px solid rgba(255, 255, 255, 0.3);
+          border-radius: 50%;
+          width: 45px;
+          height: 45px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          color: #fff;
+          font-size: 1.5rem;
+          transition: all 0.3s ease;
+          z-index: 10001;
+          backdrop-filter: blur(10px);
+        }
+
+        .modal-close-btn:hover {
+          background: rgba(255, 255, 255, 0.2);
+          border-color: var(--neon-green);
+          color: var(--neon-green);
+          transform: rotate(90deg);
+          box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+        }
+
+        .modal-image-container {
+          width: 100%;
+          height: auto;
+          max-height: 80vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          border-radius: 12px;
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+          border: 2px solid rgba(0, 255, 65, 0.3);
+        }
+
+        .modal-image {
+          width: 100%;
+          height: auto;
+          max-height: 80vh;
+          object-fit: contain;
+          display: block;
+          image-rendering: high-quality;
+          -webkit-image-rendering: high-quality;
+        }
+
+        .modal-image-info {
+          margin-top: 1.5rem;
+          text-align: center;
+          color: #fff;
+          max-width: 600px;
+        }
+
+        .modal-image-info h3 {
+          margin: 0 0 0.75rem 0;
+          font-size: 1.5rem;
+          color: var(--neon-cyan);
+          text-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+          font-family: 'Courier New', monospace;
+        }
+
+        .modal-category {
+          display: inline-block;
+          padding: 0.4rem 1rem;
+          border-radius: 999px;
+          background: rgba(37, 99, 235, 0.2);
+          color: #60a5fa;
+          font-size: 0.85rem;
+          font-weight: 600;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          margin-bottom: 0.75rem;
+        }
+
+        .modal-notes {
+          margin: 0.75rem 0 0 0;
+          color: rgba(255, 255, 255, 0.8);
+          font-size: 1rem;
+          line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+          .image-modal-overlay {
+            padding: 1rem;
+          }
+
+          .modal-close-btn {
+            top: -40px;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+          }
+
+          .modal-image-container {
+            max-height: 75vh;
+          }
+
+          .modal-image {
+            max-height: 75vh;
+          }
+
+          .modal-image-info h3 {
+            font-size: 1.2rem;
+          }
+
+          .modal-notes {
+            font-size: 0.9rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .image-modal-overlay {
+            padding: 0.5rem;
+          }
+
+          .modal-close-btn {
+            top: -35px;
+            width: 35px;
+            height: 35px;
+            font-size: 1rem;
+          }
+
+          .modal-image-container {
+            max-height: 70vh;
+            border-radius: 8px;
+          }
+
+          .modal-image {
+            max-height: 70vh;
+          }
+
+          .modal-image-info {
+            margin-top: 1rem;
+          }
+
+          .modal-image-info h3 {
+            font-size: 1rem;
+          }
+        }
+
         @media (max-width: 768px) {
           .section-header {
             flex-direction: column;

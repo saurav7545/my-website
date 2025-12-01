@@ -25,6 +25,14 @@ body.db-admin-theme {
       radial-gradient(circle at 85% 15%, rgba(236, 72, 153, 0.15), transparent 50%),
       radial-gradient(circle at 50% 80%, rgba(59, 130, 246, 0.1), transparent 50%),
       linear-gradient(to bottom, #0a0e1a 0%, #0f1419 50%, #1a1f2e 100%);
+    padding-top: 0;
+  }
+
+  .db-main {
+    padding-top: 2rem;
+    padding-left: clamp(1.5rem, 5vw, 3rem);
+    padding-right: clamp(1.5rem, 5vw, 3rem);
+    padding-bottom: 2rem;
   }
   
   /* Header Styles */
@@ -39,9 +47,16 @@ body.db-admin-theme {
     justify-content: space-between;
     gap: 1.5rem;
     position: sticky;
-    top: 0;
+    top: 70px;
     z-index: 100;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  /* When navbar is hidden (db-admin-theme), adjust top position */
+  body.db-admin-theme .db-header {
+    top: 0;
   }
   
   .db-header h1 {
@@ -52,6 +67,16 @@ body.db-admin-theme {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .db-header .user-info {
+    margin: 0.5rem 0 0 0;
+    font-size: 0.9rem;
+    color: #9ca3af;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
   
   .header-actions {

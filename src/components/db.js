@@ -4,13 +4,11 @@ import './db.css';
 // ========================
 // Constants
 // ========================
-// Remove extra /api from base URL, since Django endpoints already include /api
-const API_BASE_URL = (process.env.REACT_APP_API_URL ?? "https://backend1-2agm.onrender.com").replace(/\/$/, "");
+import { API_BASE_URL } from '../config/api';
+
 const TOKEN_KEY = 'sauravEdu:token';
 const USER_KEY = 'sauravEdu:user';
 const TOAST_DURATION = 3500;
-
-console.log('API Base URL:', API_BASE_URL); // Debug
 
 // ========================
 // Helpers
@@ -303,7 +301,10 @@ function DB() {
   return (
     <div className="db-container">
       <header className="db-header">
-        <div><h1>📸 Media Library</h1><p className="user-info">Welcome, {user?.username}</p></div>
+        <div>
+          <h1>📸 Media Library</h1>
+          <p className="user-info">{user?.username ? `Hi, ${user.username}` : 'Admin'}</p>
+        </div>
         <button onClick={handleLogout} className="logout-btn">Logout</button>
       </header>
       <main className="db-main">
